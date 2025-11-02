@@ -1,23 +1,21 @@
-import { useState } from 'react';
+import { produce } from 'immer';
 import md5 from 'md5';
-import produce from 'immer';
-import Search from './components/Search';
-import Downloads from './components/Downloads';
-import Button from './components/Button';
-import SavePath from './components/SavePath';
-import DropZone from './components/DropZone';
-import { COMPLETE, ERROR, SAVE_PATH } from './constants';
+import { useState } from 'react';
 import styles from './App.module.css';
+import Button from './components/Button';
+import Downloads from './components/Downloads';
+import DropZone from './components/DropZone';
+import SavePath from './components/SavePath';
+import Search from './components/Search';
+import { COMPLETE, ERROR, SAVE_PATH } from './constants';
 
 function App() {
   const [downloads, setDownloads] = useState([]);
-  const [savePath, setSavePath] = useState(
-    localStorage.getItem(SAVE_PATH) || '',
-  );
+  const [savePath, setSavePath] = useState(localStorage.getItem(SAVE_PATH) || '');
   const [showDrop, setShowDrop] = useState(false);
 
-  const handleSubmit = (value) => {
-    setDownloads((state) =>
+  const handleSubmit = value => {
+    setDownloads(state =>
       state.concat({
         id: md5(Date.now()),
         url: value,
@@ -26,9 +24,9 @@ function App() {
   };
 
   const handleChange = (id, status) => {
-    setDownloads((state) =>
-      produce(state, (draft) => {
-        const item = draft.find((download) => download.id === id);
+    setDownloads(state =>
+      produce(state, draft => {
+        const item = draft.find(download => download.id === id);
         if (item) {
           item.status = status;
         }
@@ -38,7 +36,7 @@ function App() {
   };
 
   const handleClear = () => {
-    setDownloads((state) =>
+    setDownloads(state =>
       state.filter(({ status }) => {
         console.log({ status });
         return status !== ERROR && status !== COMPLETE;
@@ -46,21 +44,21 @@ function App() {
     );
   };
 
-  const handleSavePath = (value) => {
+  const handleSavePath = value => {
     localStorage.setItem(SAVE_PATH, value);
     setSavePath(value);
   };
 
-  const handleDrop = (value) => {
+  const handleDrop = value => {
     setShowDrop(false);
     handleSubmit(value);
   };
 
-  const handleEnter = (e) => {
+  const handleEnter = e => {
     setShowDrop(true);
   };
 
-  const handleLeave = (e) => {
+  const handleLeave = e => {
     setShowDrop(false);
   };
 

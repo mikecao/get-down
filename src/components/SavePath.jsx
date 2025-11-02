@@ -1,4 +1,4 @@
-import { open } from '@tauri-apps/api/dialog';
+import { open } from '@tauri-apps/plugin-dialog';
 import styles from './SavePath.module.css';
 
 export default function SavePath({ path, onChange }) {
