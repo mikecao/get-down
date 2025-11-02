@@ -13,7 +13,7 @@ jobs:
         platform: [macos-latest, ubuntu-20.04, windows-latest]
     runs-on: ${{ matrix.platform }}
     steps:
-      # 1. Checkout the repo
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -34,22 +34,19 @@ jobs:
         with:
           workspaces: './src-tauri -> target'
 
-      # 5. Node.js setup with pnpm cache
-      - name: Setup Node.js and pnpm cache
+      # 5. Node.js setup with pnpm (installs pnpm and caches automatically)
+      - name: Setup Node.js with pnpm
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
           cache: 'pnpm'
+          cache-dependency-path: pnpm-lock.yaml
 
-      # 6. Install pnpm CLI
-      - name: Install pnpm
-        run: npm install -g pnpm
-
-      # 7. Install app dependencies and build frontend
+      # 6. Install app dependencies and build frontend
       - name: Install app dependencies and build web
         run: pnpm install && pnpm build
 
-      # 8. Build the Tauri app
+      # 7. Build the Tauri app
       - name: Build the app
         uses: tauri-apps/tauri-action@v0
         env:
