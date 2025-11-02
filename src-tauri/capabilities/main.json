@@ -1,10 +1,16 @@
 {
-  "identifier": "migrated",
-  "description": "permissions that were migrated from v1",
+  "identifier": "main",
   "local": true,
-  "windows": [
-    "main"
+
+  "windows": ["main"],
+
+  "window": [
+    {
+      "label": "main",
+      "file_drop": false
+    }
   ],
+
   "permissions": [
     "core:default",
     {
