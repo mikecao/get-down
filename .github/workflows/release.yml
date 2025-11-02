@@ -75,7 +75,7 @@ jobs:
 
       # 11. Upload built binaries as workflow artifacts
       - name: Upload built binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: get-down-${{ matrix.platform }}
           path: src-tauri/target/release/bundle/**
