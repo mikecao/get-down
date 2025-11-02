@@ -1,10 +1,10 @@
 import { Command } from '@tauri-apps/plugin-shell';
-import { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import debug from 'debug';
-import ProgressBar from './ProgressBar';
-import { DOWNLOADING, LOADING, COMPLETE, ERROR, SAVE_PATH } from '../constants';
+import { useEffect, useRef, useState } from 'react';
+import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '../constants';
 import styles from './Download.module.css';
+import ProgressBar from './ProgressBar';
 
 const log = debug('ui:download');
 log.log = console.log.bind(console);

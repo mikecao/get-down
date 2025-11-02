@@ -56,7 +56,9 @@
         "decorations": true,
         "titleBarStyle": "Overlay",
         "center": true,
-        "useHttpsScheme": true
+        "useHttpsScheme": false,
+        "dragDropEnabled": false,
+        "devtools": true
       }
     ],
     "trayIcon": {
