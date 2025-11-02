@@ -1,4 +1,4 @@
-import { Command } from '@tauri-apps/api/shell';
+import { Command } from '@tauri-apps/plugin-shell';
 import { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import debug from 'debug';
