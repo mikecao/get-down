@@ -2,6 +2,8 @@
 
 A simple to use download tool.
 
+[Download](https://github.com/mikecao/get-down/releases)
+
 Built using [Tauri](https://v2.tauri.app/), [React](https://react.dev/), [Vite](https://vite.dev/). Downloads use [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 ## Get started
