@@ -10,7 +10,8 @@
     "bundle": "tauri build",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "biome check ."
+    "check": "biome check .",
+    "download-binaries": "node scripts/download-binaries.mjs"
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.2.8",
