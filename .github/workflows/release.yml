@@ -7,19 +7,30 @@ on:
 
 jobs:
   release:
+    permissions:
+      contents: write
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        include:
+          - platform: 'macos-latest'
+            args: '--target aarch64-apple-darwin'
+          - platform: 'macos-latest'
+            args: '--target x86_64-apple-darwin'
+          - platform: 'ubuntu-22.04'
+            args: ''
+          - platform: 'windows-latest'
+            args: ''
+
     runs-on: ${{ matrix.platform }}
     steps:
       # 1. Checkout repository
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. Install Ubuntu dependencies
       - name: Install dependencies (Ubuntu only)
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev
@@ -27,6 +38,8 @@ jobs:
       # 3. Rust setup
       - name: Rust setup
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       # 4. Rust cache
       - name: Rust cache
@@ -36,31 +49,25 @@ jobs:
 
       # 5. Setup Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
 
-      # 6. Install pnpm globally
+      # 6. Install pnpm
       - name: Install pnpm
-        run: npm install -g pnpm
-
-      # 7. Cache pnpm store
-      - name: Cache pnpm store
-        uses: actions/cache@v3
+        uses: pnpm/action-setup@v3
         with:
-          path: ~/.pnpm-store
-          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          version: 8
 
-      # 8. Install dependencies
+      # 7. Install dependencies
       - name: Install dependencies
-        run: pnpm install --store ~/.pnpm-store
+        run: pnpm install
 
-      # 9. Build frontend
+      # 8. Build frontend
       - name: Build frontend
         run: pnpm build
-        # If frontend is in a subfolder, add: working-directory: ./frontend
 
-      # 10. Build Tauri app and attach to GitHub release
+      # 9. Build Tauri app and create release
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
         env:
@@ -71,11 +78,4 @@ jobs:
           releaseBody: 'See the assets to download and install this version.'
           releaseDraft: true
           prerelease: false
-          distPath: src-tauri/target/release/bundle
-
-      # 11. Upload built binaries as workflow artifacts
-      - name: Upload built binaries
-        uses: actions/upload-artifact@v4
-        with:
-          name: get-down-${{ matrix.platform }}
-          path: src-tauri/target/release/bundle/**
+          args: ${{ matrix.args }}
