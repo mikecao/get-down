@@ -1,45 +1,5 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
-  "build": {
-    "beforeBuildCommand": "pnpm vite-build",
-    "beforeDevCommand": "pnpm vite-dev",
-    "frontendDist": "../dist",
-    "devUrl": "http://localhost:7000"
-  },
-  "bundle": {
-    "active": true,
-    "category": "DeveloperTool",
-    "copyright": "Mike Cao <mike@mikecao.com>",
-    "targets": ["msi", "app", "dmg", "appimage"],
-    "externalBin": ["binaries/yt-dlp"],
-    "icon": [
-      "icons/32x32.png",
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ],
-    "windows": {
-      "certificateThumbprint": null,
-      "digestAlgorithm": "sha256",
-      "timestampUrl": ""
-    },
-    "longDescription": "",
-    "macOS": {
-      "entitlements": null,
-      "exceptionDomain": "",
-      "frameworks": [],
-      "providerShortName": null,
-      "signingIdentity": null
-    },
-    "resources": [],
-    "shortDescription": "",
-    "linux": {
-      "deb": {
-        "depends": []
-      }
-    }
-  },
+  "$schema": "https://schema.tauri.app/config/2",
   "productName": "get-down",
   "mainBinaryName": "get-down",
   "version": "0.1.0",
@@ -68,6 +28,46 @@
     },
     "security": {
       "csp": null
+    }
+  },
+  "build": {
+    "beforeBuildCommand": "pnpm vite-build",
+    "beforeDevCommand": "pnpm vite-dev",
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:7000"
+  },
+  "bundle": {
+    "active": true,
+    "shortDescription": "",
+    "longDescription": "",
+    "category": "DeveloperTool",
+    "copyright": "Mike Cao <mike@mikecao.com>",
+    "targets": ["msi", "app", "dmg", "appimage"],
+    "externalBin": ["binaries/yt-dlp"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": [],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    },
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "linux": {
+      "deb": {
+        "depends": []
+      }
     }
   }
 }
