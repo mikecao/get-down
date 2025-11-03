@@ -27,6 +27,17 @@
           "sidecar": true
         }
       ]
+    },
+    {
+      "identifier": "shell:allow-spawn",
+      "allow": [
+        {
+          "args": true,
+          "cmd": "",
+          "name": "binaries/yt-dlp",
+          "sidecar": true
+        }
+      ]
     }
   ]
 }
