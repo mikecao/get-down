@@ -9,7 +9,7 @@
   "bundle": {
     "active": true,
     "category": "DeveloperTool",
-    "copyright": "",
+    "copyright": "Mike Cao <mike@mikecao.com>",
     "targets": ["msi", "app", "dmg", "appimage"],
     "externalBin": ["binaries/yt-dlp"],
     "icon": [
@@ -48,10 +48,11 @@
   "app": {
     "windows": [
       {
-        "fullscreen": false,
-        "height": 800,
-        "resizable": true,
+        "label": "main",
         "title": "get-down",
+        "fullscreen": false,
+        "resizable": true,
+        "height": 800,
         "width": 1024,
         "decorations": true,
         "titleBarStyle": "Overlay",
