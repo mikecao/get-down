@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Button from './Button';
 import styles from './Search.module.css';
 
-export default function Search({ onSubmit }) {
+export default function Search({ onSubmit }: { onSubmit: (value: string) => void }) {
   const [value, setValue] = useState('');
 
   const handleSubmit = () => {
@@ -12,7 +12,7 @@ export default function Search({ onSubmit }) {
     }
   };
 
-  const handleKey = e => {
+  const handleKey = (e: { key: string }) => {
     if (e.key === 'Enter') {
       onSubmit(value);
       setValue('');
