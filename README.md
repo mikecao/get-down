@@ -1,6 +1,6 @@
 # get-down
 
-A simple to use download tool.
+A simple to use downloadBinaries tool.
 
 ## Get started
 
