@@ -84,6 +84,7 @@ jobs:
           # Copy for both architectures since it's a universal binary
           cp src-tauri/binaries/yt-dlp-universal-apple-darwin src-tauri/binaries/yt-dlp-x86_64-apple-darwin
           cp src-tauri/binaries/yt-dlp-universal-apple-darwin src-tauri/binaries/yt-dlp-aarch64-apple-darwin
+          rm src-tauri/binaries/yt-dlp-universal-apple-darwin
 
       - name: Download yt-dlp (Windows)
         if: matrix.platform == 'windows-latest'
