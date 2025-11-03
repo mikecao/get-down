@@ -4,11 +4,22 @@ A simple to use downloadBinaries tool.
 
 ## Get started
 
-### 1. Build the application.
+### 1. Download binaries
+
+```shell
+pnpm download-binaries
+```
+
+### 2. Install dependencies
 
 ```shell
 pnpm install
-pnpm bundle
+```
+
+### 3. Build the app
+
+```shell
+pnpm build
 ```
 
 ### 2. Run the application
