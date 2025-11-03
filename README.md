@@ -1,6 +1,8 @@
 # get-down
 
-A simple to use downloadBinaries tool.
+A simple to use download tool.
+
+Built using [Tauri](https://v2.tauri.app/), [React](https://react.dev/), [Vite](https://vite.dev/). Downloads use [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
 ## Get started
 
@@ -29,3 +31,4 @@ Run the `get-down.exe` file under `./src-tauri/target/release`.
 ## License
 
 MIT
+
