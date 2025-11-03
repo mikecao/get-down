@@ -2,12 +2,12 @@ import { produce } from 'immer';
 import md5 from 'md5';
 import { useState } from 'react';
 import styles from './App.module.css';
-import Button from './components/Button';
-import Downloads from './components/Downloads';
-import DropZone from './components/DropZone';
-import SavePath from './components/SavePath';
-import Search from './components/Search';
-import { COMPLETE, ERROR, SAVE_PATH } from './constants';
+import Button from '@/components/Button';
+import Downloads from '@/components/Downloads';
+import DropZone from '@/components/DropZone';
+import SavePath from '@/components/SavePath';
+import Search from '@/components/Search';
+import { COMPLETE, ERROR, SAVE_PATH } from '@/lib/constants';
 
 function App() {
   const [downloads, setDownloads] = useState([]);

@@ -2,26 +2,32 @@ import { Command } from '@tauri-apps/plugin-shell';
 import classNames from 'classnames';
 import debug from 'debug';
 import { useEffect, useRef, useState } from 'react';
-import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '../constants';
+import ProgressBar from '@/components/ProgressBar';
+import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
 import styles from './Download.module.css';
-import ProgressBar from './ProgressBar';
 
 const log = debug('ui:download');
 log.log = console.log.bind(console);
 
-export default function Download({ url, onChange }) {
+export default function Download({
+  url,
+  onChange,
+}: {
+  url: string;
+  onChange: (value: string) => void;
+}) {
   const [state, setState] = useState({
     name: url,
     status: LOADING,
     size: '--',
     speed: '--',
-    progress: 0,
+    progress: '0',
   });
   const { name, status, size, speed, progress } = state;
   const path = localStorage.getItem(SAVE_PATH) || '.';
   const pid = useRef(0);
 
-  function stdout(line) {
+  function stdout(line: string) {
     const name = line.match(/Destination:\s+(.*)/);
     if (name) {
       setState(state => ({ ...state, name: name[1] }));
@@ -45,7 +51,7 @@ export default function Download({ url, onChange }) {
     log(`stdout: ${line}`);
   }
 
-  function stderr(line) {
+  function stderr(line: string) {
     log(`stderr: ${line}`);
   }
 
@@ -61,7 +67,7 @@ export default function Download({ url, onChange }) {
 
       command.on('close', data => {
         log({ close: data });
-        const status = data.code > 0 ? ERROR : COMPLETE;
+        const status = data?.code ? ERROR : COMPLETE;
         setState(state => ({ ...state, status }));
         onChange(status);
       });
@@ -100,7 +106,7 @@ export default function Download({ url, onChange }) {
           {status}
         </span>
       </div>
-      <div>{progress > 0 ? <ProgressBar progress={progress} /> : '--'}</div>
+      <div>{+progress > 0 ? <ProgressBar progress={progress} /> : '--'}</div>
       <div>{speed}</div>
       <div>{size}</div>
     </div>
