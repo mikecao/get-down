@@ -2,7 +2,10 @@
 
 A simple to use download tool.
 
-[Download](https://github.com/mikecao/get-down/releases)
+<img width="1184" height="1037" alt="image" src="https://github.com/user-attachments/assets/44fbcdd0-8fef-4c1b-8ea8-47db9a7307df" />
+
+
+**[Download](https://github.com/mikecao/get-down/releases)**
 
 Built using [Tauri](https://v2.tauri.app/), [React](https://react.dev/), [Vite](https://vite.dev/). Downloads use [yt-dlp](https://github.com/yt-dlp/yt-dlp).
 
@@ -26,11 +29,16 @@ pnpm install
 pnpm build
 ```
 
-### 2. Run the application
+### 4. Run the application
 
-Run the `get-down.exe` file under `./src-tauri/target/release`. 
+Run the `get-down` executable file under `./src-tauri/target/release`. 
+
+## Usage
+
+1. Select your *Save to* location.
+2. Enter a URL manually or drag and drop a link onto the app. 
+3. That's it.
 
 ## License
 
 MIT
-
