@@ -1,80 +1,124 @@
-import { produce } from 'immer';
 import md5 from 'md5';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import TabBar from '@/components/TabBar';
+import TabPanel, { type Download } from '@/components/TabPanel';
+import { SAVE_PATH, TABS_STORAGE_KEY } from '@/lib/constants';
 import styles from './App.module.css';
-import Button from '@/components/Button';
-import Downloads from '@/components/Downloads';
-import DropZone from '@/components/DropZone';
-import SavePath from '@/components/SavePath';
-import Search from '@/components/Search';
-import { COMPLETE, ERROR, SAVE_PATH } from '@/lib/constants';
+
+interface Tab {
+  id: string;
+  name: string;
+  downloads: Download[];
+  savePath: string;
+}
+
+interface TabsState {
+  tabs: Tab[];
+  activeTabId: string;
+}
+
+function createTab(name: string, savePath: string): Tab {
+  return {
+    id: md5(String(Date.now()) + Math.random()),
+    name,
+    downloads: [],
+    savePath,
+  };
+}
+
+function loadTabsFromStorage(): TabsState {
+  try {
+    const stored = localStorage.getItem(TABS_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed.tabs?.length > 0) {
+        // Filter out active downloads on load (they're ephemeral)
+        const tabs = parsed.tabs.map((tab: Tab) => ({
+          ...tab,
+          downloads: tab.downloads.filter(
+            (d: Download) => d.status === 'Complete' || d.status === 'Error',
+          ),
+        }));
+        return {
+          tabs,
+          activeTabId: parsed.activeTabId || tabs[0].id,
+        };
+      }
+    }
+  } catch {
+    // Ignore parse errors
+  }
+
+  const defaultSavePath = localStorage.getItem(SAVE_PATH) || '';
+  const defaultTab = createTab('Tab 1', defaultSavePath);
+  return {
+    tabs: [defaultTab],
+    activeTabId: defaultTab.id,
+  };
+}
 
 function App() {
-  const [downloads, setDownloads] = useState([]);
-  const [savePath, setSavePath] = useState(localStorage.getItem(SAVE_PATH) || '');
-  const [showDrop, setShowDrop] = useState(false);
+  const [tabsState, setTabsState] = useState<TabsState>(loadTabsFromStorage);
 
-  const handleSubmit = value => {
-    setDownloads(state =>
-      state.concat({
-        id: md5(Date.now()),
-        url: value,
-      }),
-    );
+  useEffect(() => {
+    localStorage.setItem(TABS_STORAGE_KEY, JSON.stringify(tabsState));
+  }, [tabsState]);
+
+  const activeTab = tabsState.tabs.find(t => t.id === tabsState.activeTabId) || tabsState.tabs[0];
+
+  const handleTabSelect = (id: string) => {
+    setTabsState(state => ({ ...state, activeTabId: id }));
   };
 
-  const handleChange = (id, status) => {
-    setDownloads(state =>
-      produce(state, draft => {
-        const item = draft.find(download => download.id === id);
-        if (item) {
-          item.status = status;
-        }
-        return draft;
-      }),
-    );
+  const handleTabClose = (id: string) => {
+    setTabsState(state => {
+      const newTabs = state.tabs.filter(t => t.id !== id);
+      const newActiveId =
+        state.activeTabId === id ? newTabs[0]?.id || state.activeTabId : state.activeTabId;
+      return { tabs: newTabs, activeTabId: newActiveId };
+    });
   };
 
-  const handleClear = () => {
-    setDownloads(state =>
-      state.filter(({ status }) => {
-        console.log({ status });
-        return status !== ERROR && status !== COMPLETE;
-      }),
-    );
+  const handleTabAdd = () => {
+    const defaultSavePath = localStorage.getItem(SAVE_PATH) || '';
+    const newTab = createTab(`Tab ${tabsState.tabs.length + 1}`, defaultSavePath);
+    setTabsState(state => ({
+      tabs: [...state.tabs, newTab],
+      activeTabId: newTab.id,
+    }));
   };
 
-  const handleSavePath = value => {
-    localStorage.setItem(SAVE_PATH, value);
-    setSavePath(value);
+  const handleDownloadsChange = (downloads: Download[]) => {
+    setTabsState(state => ({
+      ...state,
+      tabs: state.tabs.map(tab => (tab.id === state.activeTabId ? { ...tab, downloads } : tab)),
+    }));
   };
 
-  const handleDrop = value => {
-    setShowDrop(false);
-    handleSubmit(value);
-  };
-
-  const handleEnter = e => {
-    setShowDrop(true);
-  };
-
-  const handleLeave = e => {
-    setShowDrop(false);
+  const handleSavePathChange = (savePath: string) => {
+    localStorage.setItem(SAVE_PATH, savePath);
+    setTabsState(state => ({
+      ...state,
+      tabs: state.tabs.map(tab => (tab.id === state.activeTabId ? { ...tab, savePath } : tab)),
+    }));
   };
 
   return (
-    <div className={styles.app} onDragEnter={handleEnter}>
-      <DropZone show={showDrop} onDrop={handleDrop} onLeave={handleLeave} />
-      <div className={styles.header}>
-        <Search onSubmit={handleSubmit} />
-      </div>
-      <div className={styles.view}>
-        <Downloads downloads={downloads} onChange={handleChange} />
-      </div>
-      <div className={styles.footer}>
-        <SavePath path={savePath} onChange={handleSavePath} />
-        <Button onClick={handleClear}>Clear completed</Button>
-      </div>
+    <div className={styles.app}>
+      <TabBar
+        tabs={tabsState.tabs}
+        activeTabId={tabsState.activeTabId}
+        onTabSelect={handleTabSelect}
+        onTabClose={handleTabClose}
+        onTabAdd={handleTabAdd}
+      />
+      <TabPanel
+        key={activeTab.id}
+        downloads={activeTab.downloads}
+        savePath={activeTab.savePath}
+        onDownloadsChange={handleDownloadsChange}
+        onSavePathChange={handleSavePathChange}
+      />
     </div>
   );
 }

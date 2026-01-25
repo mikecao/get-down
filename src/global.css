@@ -1,8 +1,9 @@
 :root {
   --font-size: 12px;
-  --font-family: 'JetBrains Mono', monospace;
+  --font-family: "JetBrains Mono", monospace;
 }
-html, body {
+html,
+body {
   font-size: var(--font-size);
   font-family: var(--font-family);
   padding: 0;
@@ -31,7 +32,9 @@ html, body {
   box-sizing: inherit;
 }
 
-input, textarea, button {
+input,
+textarea,
+button {
   font-size: var(--font-size);
   font-family: var(--font-family);
 }

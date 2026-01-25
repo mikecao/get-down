@@ -1,27 +1,6 @@
 .app {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   flex: 1;
-  position: relative;
-}
-
-.header {
-  display: flex;
-  gap: 10px;
-}
-
-.view {
-  display: flex;
-  flex-direction: column;
-  flex: 1 1 0;
   min-height: 0;
-  overflow: auto;
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
 }
