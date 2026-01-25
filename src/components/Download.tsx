@@ -52,7 +52,9 @@ export default function Download({
     }
 
     log(`stdout: ${line}`);
-    setOutput(prev => [...prev, { id: outputId.current++, text: line }]);
+    if (!/^\[download\]\s+[\d.]+%/.test(line)) {
+      setOutput(prev => [...prev, { id: outputId.current++, text: line }]);
+    }
   }
 
   function stderr(line: string) {
