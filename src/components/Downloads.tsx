@@ -10,6 +10,7 @@ export default function Downloads({ downloads, onChange }) {
         <div>Progress</div>
         <div>Speed</div>
         <div>Size</div>
+        <div></div>
       </div>
       <div className={styles.body}>
         {downloads.map(({ id, url }) => {

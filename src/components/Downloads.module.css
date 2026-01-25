@@ -24,6 +24,10 @@
   min-width: 50px;
 }
 
+.header > div:last-child {
+  width: 50px;
+}
+
 .body {
   display: flex;
   flex-direction: column;
