@@ -23,12 +23,12 @@
     "cross-fetch": "^4.1.0",
     "debug": "^4.3.4",
     "fs-extra": "^11.1.1",
-    "immer": "^10.2.0",
     "lucide-react": "^0.563.0",
     "md5": "^2.3.0",
     "node-fetch": "^3.3.1",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.2",

@@ -22,6 +22,15 @@
       "a11y": "off",
       "correctness": {
         "useExhaustiveDependencies": "off"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "level": "warn",
+          "fix": "safe",
+          "options": {
+            "functions": ["clsx", "cn"]
+          }
+        }
       }
     }
   },
@@ -30,6 +39,17 @@
       "quoteStyle": "single",
       "trailingCommas": "all",
       "arrowParentheses": "asNeeded"
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": true
+    },
+    "linter": {
+      "enabled": true
+    },
+    "formatter": {
+      "enabled": true
     }
   },
   "assist": {

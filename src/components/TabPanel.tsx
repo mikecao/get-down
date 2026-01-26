@@ -1,56 +1,38 @@
-import { produce } from 'immer';
-import md5 from 'md5';
 import { useState } from 'react';
 import Button from '@/components/Button';
 import Downloads from '@/components/Downloads';
 import DropZone from '@/components/DropZone';
 import SavePath from '@/components/SavePath';
 import Search from '@/components/Search';
-import { COMPLETE, ERROR } from '@/lib/constants';
-
-export interface Download {
-  id: string;
-  url: string;
-  status?: string;
-}
+import { useTabsStore } from '@/lib/store';
 
 interface TabPanelProps {
-  downloads: Download[];
-  savePath: string;
-  onDownloadsChange: (downloads: Download[]) => void;
-  onSavePathChange: (path: string) => void;
+  tabId: string;
 }
 
-function TabPanel({ downloads, savePath, onDownloadsChange, onSavePathChange }: TabPanelProps) {
+function TabPanel({ tabId }: TabPanelProps) {
   const [showDrop, setShowDrop] = useState(false);
+  const { tabs, addDownload, updateDownloadStatus, clearCompleted, setSavePath } = useTabsStore();
 
-  const handleSubmit = (value: string) => {
-    onDownloadsChange(
-      downloads.concat({
-        id: md5(String(Date.now())),
-        url: value,
-      }),
-    );
+  const tab = tabs.find(t => t.id === tabId);
+  if (!tab) return null;
+
+  const { downloads, savePath } = tab;
+
+  const handleSubmit = (url: string) => {
+    addDownload(tabId, url);
   };
 
-  const handleChange = (id: string, status: string) => {
-    onDownloadsChange(
-      produce(downloads, draft => {
-        const item = draft.find(download => download.id === id);
-        if (item) {
-          item.status = status;
-        }
-        return draft;
-      }),
-    );
+  const handleChange = (downloadId: string, status: string) => {
+    updateDownloadStatus(tabId, downloadId, status);
   };
 
   const handleClear = () => {
-    onDownloadsChange(
-      downloads.filter(({ status }) => {
-        return status !== ERROR && status !== COMPLETE;
-      }),
-    );
+    clearCompleted(tabId);
+  };
+
+  const handleSavePathChange = (path: string) => {
+    setSavePath(tabId, path);
   };
 
   const handleDrop = (value: string) => {
@@ -76,7 +58,7 @@ function TabPanel({ downloads, savePath, onDownloadsChange, onSavePathChange }: 
         <Downloads downloads={downloads} onChange={handleChange} />
       </div>
       <div className="flex items-center justify-between gap-2.5">
-        <SavePath path={savePath} onChange={onSavePathChange} />
+        <SavePath path={savePath} onChange={handleSavePathChange} />
         <Button onClick={handleClear}>Clear completed</Button>
       </div>
     </div>

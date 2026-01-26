@@ -8,7 +8,7 @@ export default function Button({
   onClick: MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" className="" onClick={onClick}>
       {children}
     </button>
   );

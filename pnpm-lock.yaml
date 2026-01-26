@@ -32,9 +32,6 @@ importers:
       fs-extra:
         specifier: ^11.1.1
         version: 11.3.2
-      immer:
-        specifier: ^10.2.0
-        version: 10.2.0
       lucide-react:
         specifier: ^0.563.0
         version: 0.563.0(react@19.2.0)
@@ -50,6 +47,9 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
+      zustand:
+        specifier: ^5.0.10
+        version: 5.0.10(@types/react@19.2.2)(immer@10.2.0)(react@19.2.0)
     devDependencies:
       '@biomejs/biome':
         specifier: ^2.3.2
@@ -1066,6 +1066,24 @@ packages:
     engines: {node: '>= 8'}
     hasBin: true
 
+  zustand@5.0.10:
+    resolution: {integrity: sha512-U1AiltS1O9hSy3rul+Ub82ut2fqIAefiSuwECWt6jlMVUGejvf+5omLcRBSzqbRagSM3hQZbtzdeRc6QVScXTg==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
+
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
@@ -1590,7 +1608,8 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  immer@10.2.0: {}
+  immer@10.2.0:
+    optional: true
 
   is-buffer@1.1.6: {}
 
@@ -1793,3 +1812,9 @@ snapshots:
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
+
+  zustand@5.0.10(@types/react@19.2.2)(immer@10.2.0)(react@19.2.0):
+    optionalDependencies:
+      '@types/react': 19.2.2
+      immer: 10.2.0
+      react: 19.2.0

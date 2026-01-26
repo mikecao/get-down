@@ -31,7 +31,7 @@ function TabButton({
   return (
     <button
       type="button"
-      className={`${tabBase} gap-3 text-xs ${active ? tabActive : ''}`}
+      className={`${tabBase} gap-6 text-xs ${active ? tabActive : ''}`}
       onClick={onClick}
     >
       {children}
