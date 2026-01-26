@@ -1,6 +1,7 @@
 import { Command } from '@tauri-apps/plugin-shell';
 import debug from 'debug';
 import { useEffect, useRef, useState } from 'react';
+import Column from '@/components/Column';
 import ProgressBar from '@/components/ProgressBar';
 import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
 
@@ -106,22 +107,26 @@ export default function Download({
   return (
     <div className="border-b border-border dark:border-neutral-600 last:border-0">
       <div className="flex bg-white dark:bg-neutral-800">
-        <div className="text-left p-[1.2rem] flex-1 min-w-[50px] whitespace-nowrap">
-          <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-[800px]">{name}</div>
-        </div>
-        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">
+        <Column flex>
+          <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-[800px]">
+            {name}
+          </div>
+        </Column>
+        <Column width={120}>
           <span className={getStatusClasses()}>{status}</span>
-        </div>
-        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">
+        </Column>
+        <Column width={120}>
           {+progress > 0 ? <ProgressBar progress={progress} /> : '--'}
-        </div>
-        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">{speed}</div>
-        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">{size}</div>
-        <div className="text-left p-[1.2rem] w-[50px] whitespace-nowrap">
+        </Column>
+        <Column width={120}>{speed}</Column>
+        <Column width={120}>{size}</Column>
+        <Column width={50}>
           <button
             type="button"
             className={`bg-transparent border-none cursor-pointer p-1 rounded text-neutral-500 dark:text-neutral-400 flex items-center justify-center hover:bg-neutral-200 dark:hover:bg-neutral-600 hover:text-neutral-700 dark:hover:text-neutral-200 ${
-              expanded ? 'bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-200' : ''
+              expanded
+                ? 'bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-200'
+                : ''
             }`}
             onClick={() => setExpanded(prev => !prev)}
             title="Toggle output"
@@ -141,10 +146,10 @@ export default function Download({
               <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
           </button>
-        </div>
+        </Column>
       </div>
       {expanded && (
-        <div className="bg-terminal text-terminal-text p-3 font-mono text-xs max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all">
+        <div className="bg-terminal text-terminal-text p-3 font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all">
           {output.map(line => (
             <div key={line.id} className="leading-[1.4]">
               {line.text}

@@ -1,17 +1,16 @@
+import Column from './Column';
 import Download from './Download';
 
 export default function Downloads({ downloads, onChange }) {
   return (
     <div className="flex flex-col rounded bg-surface dark:bg-neutral-800 border border-border dark:border-neutral-600 overflow-hidden">
-      <div className="flex bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200">
-        <div className="font-bold text-left p-[1.2rem] flex-1 min-w-[50px] whitespace-nowrap">
-          Name
-        </div>
-        <div className="font-bold text-left p-[1.2rem] w-[120px] whitespace-nowrap">Status</div>
-        <div className="font-bold text-left p-[1.2rem] w-[120px] whitespace-nowrap">Progress</div>
-        <div className="font-bold text-left p-[1.2rem] w-[120px] whitespace-nowrap">Speed</div>
-        <div className="font-bold text-left p-[1.2rem] w-[120px] whitespace-nowrap">Size</div>
-        <div className="font-bold text-left p-[1.2rem] w-[50px] whitespace-nowrap" />
+      <div className="flex bg-neutral-100 dark:bg-neutral-900 text-neutral-700 dark:text-neutral-200">
+        <Column flex bold>Name</Column>
+        <Column width={120} bold>Status</Column>
+        <Column width={120} bold>Progress</Column>
+        <Column width={120} bold>Speed</Column>
+        <Column width={120} bold>Size</Column>
+        <Column width={50} bold />
       </div>
       <div className="flex flex-col overflow-y-auto overflow-x-hidden">
         {downloads.map(({ id, url }) => {
