@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from 'react';
 import Button from './Button';
 
 interface Tab {
@@ -12,6 +12,7 @@ interface TabBarProps {
   onTabSelect: (id: string) => void;
   onTabClose: (id: string) => void;
   onTabAdd: () => void;
+  onTabRename: (id: string, name: string) => void;
 }
 
 const tabStyles =
@@ -61,14 +62,77 @@ function AddButton({ onClick }: { onClick: () => void }) {
   );
 }
 
-function TabBar({ tabs, activeTabId, onTabSelect, onTabClose, onTabAdd }: TabBarProps) {
+function TabName({ name, onRename }: { name: string; onRename: (name: string) => void }) {
+  const [editing, setEditing] = useState(false);
+  const [value, setValue] = useState(name);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (editing && inputRef.current) {
+      inputRef.current.focus();
+      inputRef.current.select();
+    }
+  }, [editing]);
+
+  const handleDoubleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setValue(name);
+    setEditing(true);
+  };
+
+  const handleSave = () => {
+    if (value.trim()) {
+      onRename(value.trim());
+    }
+    setEditing(false);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSave();
+    } else if (e.key === 'Escape') {
+      setEditing(false);
+    }
+  };
+
+  if (editing) {
+    return (
+      <input
+        ref={inputRef}
+        type="text"
+        value={value}
+        onChange={e => setValue(e.target.value)}
+        onBlur={handleSave}
+        onKeyDown={handleKeyDown}
+        onClick={e => e.stopPropagation()}
+        className="w-[100px] rounded border border-border bg-white px-1 py-0 text-inherit outline-none dark:border-neutral-500 dark:bg-neutral-700"
+      />
+    );
+  }
+
+  return (
+    <span
+      className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap"
+      onDoubleClick={handleDoubleClick}
+    >
+      {name}
+    </span>
+  );
+}
+
+function TabBar({
+  tabs,
+  activeTabId,
+  onTabSelect,
+  onTabClose,
+  onTabAdd,
+  onTabRename,
+}: TabBarProps) {
   return (
     <div className="mb-2.5 flex gap-1">
       {tabs.map(tab => (
         <TabButton key={tab.id} active={tab.id === activeTabId} onClick={() => onTabSelect(tab.id)}>
-          <span className="max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap">
-            {tab.name}
-          </span>
+          <TabName name={tab.name} onRename={name => onTabRename(tab.id, name)} />
           {tabs.length > 1 && <CloseButton onClick={() => onTabClose(tab.id)} />}
         </TabButton>
       ))}

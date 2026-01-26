@@ -5,7 +5,7 @@ import { useTabsStore } from '@/lib/store';
 import { useTheme } from '@/lib/useTheme';
 
 function App() {
-  const { tabs, activeTabId, addTab, closeTab, selectTab } = useTabsStore();
+  const { tabs, activeTabId, addTab, closeTab, selectTab, renameTab } = useTabsStore();
   const { theme, toggleTheme } = useTheme();
 
   const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
@@ -26,6 +26,7 @@ function App() {
         onTabSelect={selectTab}
         onTabClose={closeTab}
         onTabAdd={addTab}
+        onTabRename={renameTab}
       />
       {activeTab && <TabPanel key={activeTab.id} tabId={activeTab.id} />}
     </div>
