@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Button from './Button';
+import Input from './Input';
 
 export default function Search({ onSubmit }: { onSubmit: (value: string) => void }) {
   const [value, setValue] = useState('');
@@ -20,7 +21,7 @@ export default function Search({ onSubmit }: { onSubmit: (value: string) => void
 
   return (
     <div className="flex items-center gap-2.5 flex-1">
-      <input
+      <Input
         placeholder="Enter URL"
         value={value}
         onChange={e => setValue(e.target.value)}

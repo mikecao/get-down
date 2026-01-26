@@ -1,4 +1,6 @@
 import { open } from '@tauri-apps/plugin-dialog';
+import Button from './Button';
+import Input from './Input';
 
 export default function SavePath({
   path,
@@ -18,8 +20,8 @@ export default function SavePath({
   return (
     <div className="flex items-center gap-2.5 whitespace-nowrap">
       <div>Save to</div>
-      <input type="text" value={path} onChange={e => onChange(e.target.value)} readOnly={true} />
-      <button onClick={handleOpen}>Select</button>
+      <Input value={path} onChange={e => onChange(e.target.value)} readOnly />
+      <Button onClick={handleOpen}>Select</Button>
     </div>
   );
 }
