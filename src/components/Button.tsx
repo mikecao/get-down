@@ -19,7 +19,7 @@ export default function Button({
     <button
       type={type}
       title={title}
-      className={`cursor-pointer whitespace-nowrap rounded border border-border bg-surface px-4 py-2 text-inherit hover:bg-white active:bg-surface dark:border-neutral-600 dark:bg-neutral-700 dark:active:bg-neutral-700 dark:hover:bg-neutral-600 ${className}`}
+      className={`cursor-pointer whitespace-nowrap rounded border border-border bg-surface px-3 py-2 text-inherit hover:bg-white active:bg-surface dark:border-neutral-600 dark:bg-neutral-700 dark:active:bg-neutral-700 dark:hover:bg-neutral-600 ${className}`}
       onClick={onClick}
     >
       {children}

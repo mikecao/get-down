@@ -1,6 +1,7 @@
 import { Command } from '@tauri-apps/plugin-shell';
 import debug from 'debug';
 import { useEffect, useRef, useState } from 'react';
+import Button from '@/components/Button';
 import Column from '@/components/Column';
 import ProgressBar from '@/components/ProgressBar';
 import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
@@ -119,15 +120,14 @@ export default function Download({
         <Column width={120}>{speed}</Column>
         <Column width={120}>{size}</Column>
         <Column width={50}>
-          <button
-            type="button"
-            className={`flex cursor-pointer items-center justify-center rounded border-none bg-transparent p-1 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 ${
+          <Button
+            onClick={() => setExpanded(prev => !prev)}
+            title="Toggle output"
+            className={`border-none bg-transparent p-1 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 ${
               expanded
                 ? 'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200'
                 : ''
             }`}
-            onClick={() => setExpanded(prev => !prev)}
-            title="Toggle output"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ export default function Download({
               <polyline points="4 17 10 11 4 5" />
               <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
-          </button>
+          </Button>
         </Column>
       </div>
       {expanded && (

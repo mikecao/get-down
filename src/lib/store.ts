@@ -125,7 +125,7 @@ export const useTabsStore = create<TabsState>()(
         })),
         activeTabId: state.activeTabId,
       }),
-      onRehydrate: () => state => {
+      onRehydrateStorage: () => (state: TabsState | undefined) => {
         // Set activeTabId to first tab if not set
         if (state && (!state.activeTabId || !state.tabs.find(t => t.id === state.activeTabId))) {
           state.activeTabId = state.tabs[0]?.id || '';

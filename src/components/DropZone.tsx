@@ -1,6 +1,13 @@
+import type { DragEvent } from 'react';
 import download from '../assets/download.svg';
 
-export default function DropZone({ show, onDrop, onLeave }) {
+interface DropZoneProps {
+  show: boolean;
+  onDrop: (value: string) => void;
+  onLeave: (e: DragEvent<HTMLDivElement>) => void;
+}
+
+export default function DropZone({ show, onDrop, onLeave }: DropZoneProps) {
   if (!show) {
     return null;
   }

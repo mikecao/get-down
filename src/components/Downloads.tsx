@@ -1,7 +1,13 @@
+import type { Download as DownloadType } from '@/lib/store';
 import Column from './Column';
 import Download from './Download';
 
-export default function Downloads({ downloads, onChange }) {
+interface DownloadsProps {
+  downloads: DownloadType[];
+  onChange: (id: string, status: string) => void;
+}
+
+export default function Downloads({ downloads, onChange }: DownloadsProps) {
   return (
     <div className="flex flex-col overflow-hidden rounded border border-border bg-surface dark:border-neutral-600 dark:bg-neutral-800">
       <div className="flex bg-neutral-100 text-neutral-700 dark:bg-neutral-900 dark:text-neutral-200">
