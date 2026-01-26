@@ -11,11 +11,11 @@ function App() {
   const activeTab = tabs.find(t => t.id === activeTabId) || tabs[0];
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 relative">
+    <div className="relative flex min-h-0 flex-1 flex-col">
       <button
         type="button"
         onClick={toggleTheme}
-        className="absolute top-0 right-0 p-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700"
+        className="absolute top-0 right-0 rounded p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700"
         title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
       >
         {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}

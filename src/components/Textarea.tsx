@@ -21,7 +21,7 @@ export default function Textarea({
       placeholder={placeholder}
       readOnly={readOnly}
       onChange={onChange}
-      className={`block py-2 px-4 border border-border dark:border-neutral-600 rounded outline-none flex-1 bg-white dark:bg-neutral-700 text-inherit font-mono text-xs ${className}`}
+      className={`block flex-1 rounded border border-border bg-white px-4 py-2 text-inherit outline-none dark:border-neutral-600 dark:bg-neutral-700 ${className}`}
     />
   );
 }

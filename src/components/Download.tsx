@@ -105,27 +105,25 @@ export default function Download({
   };
 
   return (
-    <div className="border-b border-border dark:border-neutral-600 last:border-0">
+    <div className="border-border border-b last:border-0 dark:border-neutral-600">
       <div className="flex bg-white dark:bg-neutral-800">
         <Column flex>
-          <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-[800px]">
+          <div className="max-w-[800px] overflow-hidden text-ellipsis whitespace-nowrap">
             {name}
           </div>
         </Column>
         <Column width={120}>
           <span className={getStatusClasses()}>{status}</span>
         </Column>
-        <Column width={120}>
-          {+progress > 0 ? <ProgressBar progress={progress} /> : '--'}
-        </Column>
+        <Column width={120}>{+progress > 0 ? <ProgressBar progress={progress} /> : '--'}</Column>
         <Column width={120}>{speed}</Column>
         <Column width={120}>{size}</Column>
         <Column width={50}>
           <button
             type="button"
-            className={`bg-transparent border-none cursor-pointer p-1 rounded text-neutral-500 dark:text-neutral-400 flex items-center justify-center hover:bg-neutral-200 dark:hover:bg-neutral-600 hover:text-neutral-700 dark:hover:text-neutral-200 ${
+            className={`flex cursor-pointer items-center justify-center rounded border-none bg-transparent p-1 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 ${
               expanded
-                ? 'bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-200'
+                ? 'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200'
                 : ''
             }`}
             onClick={() => setExpanded(prev => !prev)}
@@ -149,7 +147,7 @@ export default function Download({
         </Column>
       </div>
       {expanded && (
-        <div className="bg-terminal text-terminal-text p-3 font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all">
+        <div className="max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all bg-terminal p-3 font-mono text-terminal-text">
           {output.map(line => (
             <div key={line.id} className="leading-[1.4]">
               {line.text}

@@ -49,12 +49,12 @@ function TabPanel({ tabId }: TabPanelProps) {
   };
 
   return (
-    <div className="flex flex-col gap-2.5 flex-1 relative" onDragEnter={handleEnter}>
+    <div className="relative flex flex-1 flex-col gap-2.5" onDragEnter={handleEnter}>
       <DropZone show={showDrop} onDrop={handleDrop} onLeave={handleLeave} />
       <div className="flex gap-2.5">
         <Search onSubmit={handleSubmit} />
       </div>
-      <div className="flex flex-col flex-1 min-h-0 overflow-auto">
+      <div className="flex min-h-0 flex-1 flex-col overflow-auto">
         <Downloads downloads={downloads} onChange={handleChange} />
       </div>
       <div className="flex items-center justify-between gap-2.5">

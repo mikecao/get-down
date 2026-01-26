@@ -72,7 +72,10 @@ export const useTabsStore = create<TabsState>()(
             tab.id === tabId
               ? {
                   ...tab,
-                  downloads: [...tab.downloads, { id: md5(String(Date.now()) + Math.random()), url }],
+                  downloads: [
+                    ...tab.downloads,
+                    { id: md5(String(Date.now()) + Math.random()), url },
+                  ],
                 }
               : tab,
           ),
@@ -85,9 +88,7 @@ export const useTabsStore = create<TabsState>()(
             tab.id === tabId
               ? {
                   ...tab,
-                  downloads: tab.downloads.map(d =>
-                    d.id === downloadId ? { ...d, status } : d,
-                  ),
+                  downloads: tab.downloads.map(d => (d.id === downloadId ? { ...d, status } : d)),
                 }
               : tab,
           ),
@@ -100,9 +101,7 @@ export const useTabsStore = create<TabsState>()(
             tab.id === tabId
               ? {
                   ...tab,
-                  downloads: tab.downloads.filter(
-                    d => d.status !== COMPLETE && d.status !== ERROR,
-                  ),
+                  downloads: tab.downloads.filter(d => d.status !== COMPLETE && d.status !== ERROR),
                 }
               : tab,
           ),
@@ -112,9 +111,7 @@ export const useTabsStore = create<TabsState>()(
       setSavePath: (tabId: string, path: string) => {
         localStorage.setItem(SAVE_PATH, path);
         set(state => ({
-          tabs: state.tabs.map(tab =>
-            tab.id === tabId ? { ...tab, savePath: path } : tab,
-          ),
+          tabs: state.tabs.map(tab => (tab.id === tabId ? { ...tab, savePath: path } : tab)),
         }));
       },
     }),
@@ -124,9 +121,7 @@ export const useTabsStore = create<TabsState>()(
         tabs: state.tabs.map(tab => ({
           ...tab,
           // Only persist completed/errored downloads
-          downloads: tab.downloads.filter(
-            d => d.status === COMPLETE || d.status === ERROR,
-          ),
+          downloads: tab.downloads.filter(d => d.status === COMPLETE || d.status === ERROR),
         })),
         activeTabId: state.activeTabId,
       }),

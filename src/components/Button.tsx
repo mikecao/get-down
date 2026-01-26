@@ -8,12 +8,18 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
 }
 
-export default function Button({ children, onClick, className = '', title, type = 'button' }: ButtonProps) {
+export default function Button({
+  children,
+  onClick,
+  className = '',
+  title,
+  type = 'button',
+}: ButtonProps) {
   return (
     <button
       type={type}
       title={title}
-      className={`py-2 px-4 bg-surface dark:bg-neutral-700 border border-border dark:border-neutral-600 rounded whitespace-nowrap cursor-pointer text-inherit font-mono text-xs hover:bg-white dark:hover:bg-neutral-600 active:bg-surface dark:active:bg-neutral-700 ${className}`}
+      className={`cursor-pointer whitespace-nowrap rounded border border-border bg-surface px-4 py-2 text-inherit hover:bg-white active:bg-surface dark:border-neutral-600 dark:bg-neutral-700 dark:active:bg-neutral-700 dark:hover:bg-neutral-600 ${className}`}
       onClick={onClick}
     >
       {children}

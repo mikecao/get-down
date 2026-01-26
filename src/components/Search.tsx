@@ -20,7 +20,7 @@ export default function Search({ onSubmit }: { onSubmit: (value: string) => void
   };
 
   return (
-    <div className="flex items-center gap-2.5 flex-1">
+    <div className="flex flex-1 items-center gap-2.5">
       <Input
         placeholder="Enter URL"
         value={value}

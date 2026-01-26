@@ -10,7 +10,7 @@ interface ColumnProps {
 export default function Column({ children, width, flex, bold }: ColumnProps) {
   return (
     <div
-      className={`text-left p-[1.2rem] whitespace-nowrap ${bold ? 'font-bold' : ''} ${flex ? 'flex-1 min-w-[50px]' : ''}`}
+      className={`whitespace-nowrap p-[1.2rem] text-left ${bold ? 'font-bold' : ''} ${flex ? 'min-w-[50px] flex-1' : ''}`}
       style={width ? { width } : undefined}
     >
       {children}
