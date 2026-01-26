@@ -5,15 +5,19 @@ import Button from '@/components/Button';
 import Column from '@/components/Column';
 import ProgressBar from '@/components/ProgressBar';
 import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
+import { buildYtDlpArgs } from '@/lib/settingsStore';
+import type { Settings } from '@/lib/store';
 
 const log = debug('ui:download');
 log.log = console.log.bind(console);
 
 export default function Download({
   url,
+  settings,
   onChange,
 }: {
   url: string;
+  settings: Settings;
   onChange: (value: string) => void;
 }) {
   const [state, setState] = useState({
@@ -64,13 +68,8 @@ export default function Download({
 
   useEffect(() => {
     async function spawn() {
-      const command = Command.sidecar('binaries/yt-dlp', [
-        url,
-        '-o',
-        `${path}/%(title)s.%(ext)s`,
-        '--no-mtime',
-        '--no-overwrites',
-      ]);
+      const args = buildYtDlpArgs(settings, url, path);
+      const command = Command.sidecar('binaries/yt-dlp', args);
 
       command.on('close', data => {
         log({ close: data });

@@ -17,7 +17,7 @@ function TabPanel({ tabId }: TabPanelProps) {
   const tab = tabs.find(t => t.id === tabId);
   if (!tab) return null;
 
-  const { downloads, savePath } = tab;
+  const { downloads, savePath, settings } = tab;
 
   const handleSubmit = (url: string) => {
     addDownload(tabId, url);
@@ -55,7 +55,7 @@ function TabPanel({ tabId }: TabPanelProps) {
         <Search onSubmit={handleSubmit} />
       </div>
       <div className="flex min-h-0 flex-1 flex-col overflow-auto">
-        <Downloads downloads={downloads} onChange={handleChange} />
+        <Downloads downloads={downloads} settings={settings} onChange={handleChange} />
       </div>
       <div className="flex items-center justify-between gap-2.5">
         <SavePath path={savePath} onChange={handleSavePathChange} />

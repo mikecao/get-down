@@ -1,13 +1,14 @@
-import type { Download as DownloadType } from '@/lib/store';
+import type { Download as DownloadType, Settings } from '@/lib/store';
 import Column from './Column';
 import Download from './Download';
 
 interface DownloadsProps {
   downloads: DownloadType[];
+  settings: Settings;
   onChange: (id: string, status: string) => void;
 }
 
-export default function Downloads({ downloads, onChange }: DownloadsProps) {
+export default function Downloads({ downloads, settings, onChange }: DownloadsProps) {
   return (
     <div className="flex flex-col overflow-hidden rounded border border-border bg-surface dark:border-neutral-600 dark:bg-neutral-800">
       <div className="flex bg-neutral-100 text-neutral-700 dark:bg-neutral-900 dark:text-neutral-200">
@@ -30,7 +31,14 @@ export default function Downloads({ downloads, onChange }: DownloadsProps) {
       </div>
       <div className="flex flex-col overflow-y-auto overflow-x-hidden">
         {downloads.map(({ id, url }) => {
-          return <Download key={id} url={url} onChange={status => onChange(id, status)} />;
+          return (
+            <Download
+              key={id}
+              url={url}
+              settings={settings}
+              onChange={status => onChange(id, status)}
+            />
+          );
         })}
       </div>
     </div>

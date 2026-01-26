@@ -9,11 +9,38 @@ export interface Download {
   status?: string;
 }
 
+export interface Settings {
+  format: string;
+  extractAudio: boolean;
+  audioFormat: string;
+  rateLimit: string;
+  concurrentFragments: string;
+  writeSubs: boolean;
+  subLangs: string;
+  restrictFilenames: boolean;
+  cookiesFromBrowser: string;
+  customArgs: string;
+}
+
+export const defaultSettings: Settings = {
+  format: '',
+  extractAudio: false,
+  audioFormat: 'mp3',
+  rateLimit: '',
+  concurrentFragments: '',
+  writeSubs: false,
+  subLangs: 'en',
+  restrictFilenames: false,
+  cookiesFromBrowser: '',
+  customArgs: '',
+};
+
 export interface Tab {
   id: string;
   name: string;
   downloads: Download[];
   savePath: string;
+  settings: Settings;
 }
 
 interface TabsState {
@@ -27,6 +54,7 @@ interface TabsState {
   updateDownloadStatus: (tabId: string, downloadId: string, status: string) => void;
   clearCompleted: (tabId: string) => void;
   setSavePath: (tabId: string, path: string) => void;
+  updateSettings: (tabId: string, settings: Partial<Settings>) => void;
 }
 
 function createTab(name: string, savePath: string): Tab {
@@ -35,6 +63,7 @@ function createTab(name: string, savePath: string): Tab {
     name,
     downloads: [],
     savePath,
+    settings: { ...defaultSettings },
   };
 }
 
@@ -122,6 +151,14 @@ export const useTabsStore = create<TabsState>()(
           tabs: state.tabs.map(tab => (tab.id === tabId ? { ...tab, savePath: path } : tab)),
         }));
       },
+
+      updateSettings: (tabId: string, newSettings: Partial<Settings>) => {
+        set(state => ({
+          tabs: state.tabs.map(tab =>
+            tab.id === tabId ? { ...tab, settings: { ...tab.settings, ...newSettings } } : tab,
+          ),
+        }));
+      },
     }),
     {
       name: TABS_STORAGE_KEY,
@@ -134,9 +171,17 @@ export const useTabsStore = create<TabsState>()(
         activeTabId: state.activeTabId,
       }),
       onRehydrateStorage: () => (state: TabsState | undefined) => {
-        // Set activeTabId to first tab if not set
-        if (state && (!state.activeTabId || !state.tabs.find(t => t.id === state.activeTabId))) {
-          state.activeTabId = state.tabs[0]?.id || '';
+        if (state) {
+          // Migrate tabs without settings
+          for (const tab of state.tabs) {
+            if (!tab.settings) {
+              tab.settings = { ...defaultSettings };
+            }
+          }
+          // Set activeTabId to first tab if not set
+          if (!state.activeTabId || !state.tabs.find(t => t.id === state.activeTabId)) {
+            state.activeTabId = state.tabs[0]?.id || '';
+          }
         }
       },
     },
