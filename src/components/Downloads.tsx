@@ -3,7 +3,7 @@ import Download from './Download';
 export default function Downloads({ downloads, onChange }) {
   return (
     <div className="flex flex-col rounded bg-surface dark:bg-neutral-800 border border-border dark:border-neutral-600 overflow-hidden">
-      <div className="flex">
+      <div className="flex bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200">
         <div className="font-bold text-left p-[1.2rem] flex-1 min-w-[50px] whitespace-nowrap">
           Name
         </div>
