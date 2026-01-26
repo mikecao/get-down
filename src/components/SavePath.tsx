@@ -1,5 +1,4 @@
 import { open } from '@tauri-apps/plugin-dialog';
-import styles from './SavePath.module.css';
 
 export default function SavePath({
   path,
@@ -17,7 +16,7 @@ export default function SavePath({
   };
 
   return (
-    <div className={styles.container}>
+    <div className="flex items-center gap-2.5 whitespace-nowrap">
       <div>Save to</div>
       <input type="text" value={path} onChange={e => onChange(e.target.value)} readOnly={true} />
       <button onClick={handleOpen}>Select</button>

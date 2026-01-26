@@ -1,16 +1,28 @@
-:root {
-  --font-size: 12px;
-  --font-family: "JetBrains Mono", monospace;
+@import "tailwindcss";
+
+@theme {
+  --font-family-mono: "JetBrains Mono", monospace;
+
+  --color-border: #cacaca;
+  --color-surface: #f5f5f5;
+  --color-background: #eaeaea;
+  --color-success: #15a46e;
+  --color-success-bg: #cef8e0;
+  --color-error: #f75c46;
+  --color-error-bg: #ffebe7;
+  --color-terminal: #1e1e1e;
+  --color-terminal-text: #d4d4d4;
 }
+
 html,
 body {
-  font-size: var(--font-size);
-  font-family: var(--font-family);
+  font-size: 12px;
+  font-family: var(--font-family-mono);
   padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #eaeaea;
+  background: var(--color-background);
   width: 100%;
   height: 100%;
   display: flex;
@@ -35,14 +47,14 @@ body {
 input,
 textarea,
 button {
-  font-size: var(--font-size);
-  font-family: var(--font-family);
+  font-size: 12px;
+  font-family: var(--font-family-mono);
 }
 
 input {
   display: block;
   padding: 8px 16px;
-  border: 1px solid #cacaca;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   outline: none;
   flex: 1;
@@ -50,10 +62,11 @@ input {
 
 button {
   padding: 8px 16px;
-  background: #f5f5f5;
-  border: 1px solid #cacaca;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 button:hover {
@@ -61,5 +74,5 @@ button:hover {
 }
 
 button:active {
-  background: #f5f5f5;
+  background: var(--color-surface);
 }

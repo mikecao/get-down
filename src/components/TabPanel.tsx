@@ -7,7 +7,6 @@ import DropZone from '@/components/DropZone';
 import SavePath from '@/components/SavePath';
 import Search from '@/components/Search';
 import { COMPLETE, ERROR } from '@/lib/constants';
-import styles from './TabPanel.module.css';
 
 export interface Download {
   id: string;
@@ -68,15 +67,15 @@ function TabPanel({ downloads, savePath, onDownloadsChange, onSavePathChange }: 
   };
 
   return (
-    <div className={styles.panel} onDragEnter={handleEnter}>
+    <div className="flex flex-col gap-2.5 flex-1 relative" onDragEnter={handleEnter}>
       <DropZone show={showDrop} onDrop={handleDrop} onLeave={handleLeave} />
-      <div className={styles.header}>
+      <div className="flex gap-2.5">
         <Search onSubmit={handleSubmit} />
       </div>
-      <div className={styles.view}>
+      <div className="flex flex-col flex-1 min-h-0 overflow-auto">
         <Downloads downloads={downloads} onChange={handleChange} />
       </div>
-      <div className={styles.footer}>
+      <div className="flex items-center justify-between gap-2.5">
         <SavePath path={savePath} onChange={onSavePathChange} />
         <Button onClick={handleClear}>Clear completed</Button>
       </div>

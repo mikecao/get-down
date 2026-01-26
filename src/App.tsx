@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import TabBar from '@/components/TabBar';
 import TabPanel, { type Download } from '@/components/TabPanel';
 import { SAVE_PATH, TABS_STORAGE_KEY } from '@/lib/constants';
-import styles from './App.module.css';
 
 interface Tab {
   id: string;
@@ -104,7 +103,7 @@ function App() {
   };
 
   return (
-    <div className={styles.app}>
+    <div className="flex flex-col flex-1 min-h-0">
       <TabBar
         tabs={tabsState.tabs}
         activeTabId={tabsState.activeTabId}

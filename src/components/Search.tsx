@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Button from './Button';
-import styles from './Search.module.css';
 
 export default function Search({ onSubmit }: { onSubmit: (value: string) => void }) {
   const [value, setValue] = useState('');
@@ -20,7 +19,7 @@ export default function Search({ onSubmit }: { onSubmit: (value: string) => void
   };
 
   return (
-    <div className={styles.search}>
+    <div className="flex items-center gap-2.5 flex-1">
       <input
         placeholder="Enter URL"
         value={value}

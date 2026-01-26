@@ -1,10 +1,8 @@
 import { Command } from '@tauri-apps/plugin-shell';
-import classNames from 'classnames';
 import debug from 'debug';
 import { useEffect, useRef, useState } from 'react';
 import ProgressBar from '@/components/ProgressBar';
 import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
-import styles from './Download.module.css';
 
 const log = debug('ui:download');
 log.log = console.log.bind(console);
@@ -98,29 +96,33 @@ export default function Download({
     }
   }, [url]);
 
+  const getStatusClasses = () => {
+    const base = 'p-1 rounded font-bold';
+    if (status === ERROR) return `${base} text-error bg-error-bg`;
+    if (status === COMPLETE) return `${base} text-success bg-success-bg`;
+    return base;
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.row}>
-        <div>
-          <div className={styles.name}>{name}</div>
+    <div className="border-b border-border last:border-0">
+      <div className="flex bg-white">
+        <div className="text-left p-[1.2rem] flex-1 min-w-[50px] whitespace-nowrap">
+          <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-[800px]">{name}</div>
         </div>
-        <div>
-          <span
-            className={classNames(styles.status, {
-              [styles.error]: status === ERROR,
-              [styles.complete]: status === COMPLETE,
-            })}
-          >
-            {status}
-          </span>
+        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">
+          <span className={getStatusClasses()}>{status}</span>
         </div>
-        <div>{+progress > 0 ? <ProgressBar progress={progress} /> : '--'}</div>
-        <div>{speed}</div>
-        <div>{size}</div>
-        <div>
+        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">
+          {+progress > 0 ? <ProgressBar progress={progress} /> : '--'}
+        </div>
+        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">{speed}</div>
+        <div className="text-left p-[1.2rem] w-[120px] whitespace-nowrap">{size}</div>
+        <div className="text-left p-[1.2rem] w-[50px] whitespace-nowrap">
           <button
             type="button"
-            className={classNames(styles.terminal, { [styles.terminalActive]: expanded })}
+            className={`bg-transparent border-none cursor-pointer p-1 rounded text-[#666] flex items-center justify-center hover:bg-[#e8e8e8] hover:text-[#333] ${
+              expanded ? 'bg-[#e0e0e0] text-[#333]' : ''
+            }`}
             onClick={() => setExpanded(prev => !prev)}
             title="Toggle output"
           >
@@ -142,9 +144,11 @@ export default function Download({
         </div>
       </div>
       {expanded && (
-        <div className={styles.output}>
+        <div className="bg-terminal text-terminal-text p-3 font-mono text-xs max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all">
           {output.map(line => (
-            <div key={line.id}>{line.text}</div>
+            <div key={line.id} className="leading-[1.4]">
+              {line.text}
+            </div>
           ))}
         </div>
       )}
