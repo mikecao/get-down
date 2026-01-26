@@ -104,8 +104,8 @@ export default function Download({
   };
 
   return (
-    <div className="border-b border-border last:border-0">
-      <div className="flex bg-white">
+    <div className="border-b border-border dark:border-neutral-600 last:border-0">
+      <div className="flex bg-white dark:bg-neutral-800">
         <div className="text-left p-[1.2rem] flex-1 min-w-[50px] whitespace-nowrap">
           <div className="overflow-hidden whitespace-nowrap text-ellipsis max-w-[800px]">{name}</div>
         </div>
@@ -120,8 +120,8 @@ export default function Download({
         <div className="text-left p-[1.2rem] w-[50px] whitespace-nowrap">
           <button
             type="button"
-            className={`bg-transparent border-none cursor-pointer p-1 rounded text-[#666] flex items-center justify-center hover:bg-[#e8e8e8] hover:text-[#333] ${
-              expanded ? 'bg-[#e0e0e0] text-[#333]' : ''
+            className={`bg-transparent border-none cursor-pointer p-1 rounded text-neutral-500 dark:text-neutral-400 flex items-center justify-center hover:bg-neutral-200 dark:hover:bg-neutral-600 hover:text-neutral-700 dark:hover:text-neutral-200 ${
+              expanded ? 'bg-neutral-200 dark:bg-neutral-600 text-neutral-700 dark:text-neutral-200' : ''
             }`}
             onClick={() => setExpanded(prev => !prev)}
             title="Toggle output"

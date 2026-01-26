@@ -18,8 +18,8 @@ function TabBar({ tabs, activeTabId, onTabSelect, onTabClose, onTabAdd }: TabBar
         <button
           key={tab.id}
           type="button"
-          className={`flex items-center gap-3 py-2 px-3 bg-surface border border-border rounded text-[#666] cursor-pointer text-xs hover:bg-white hover:text-[#333] ${
-            tab.id === activeTabId ? 'bg-white text-[#333] border-[#999]' : ''
+          className={`flex items-center gap-3 py-2 px-3 bg-surface dark:bg-neutral-700 border border-border dark:border-neutral-600 rounded text-neutral-500 dark:text-neutral-400 cursor-pointer text-xs hover:bg-white dark:hover:bg-neutral-600 hover:text-neutral-700 dark:hover:text-neutral-200 ${
+            tab.id === activeTabId ? 'bg-white dark:bg-neutral-600 text-neutral-700 dark:text-neutral-200 border-neutral-400 dark:border-neutral-500' : ''
           }`}
           onClick={() => onTabSelect(tab.id)}
         >
@@ -28,7 +28,7 @@ function TabBar({ tabs, activeTabId, onTabSelect, onTabClose, onTabAdd }: TabBar
           </span>
           {tabs.length > 1 && (
             <span
-              className="flex items-center justify-center w-4 h-4 p-0 bg-transparent border-none rounded text-[#999] cursor-pointer text-sm leading-none hover:bg-error hover:text-white"
+              className="flex items-center justify-center w-4 h-4 p-0 bg-transparent border-none rounded text-neutral-400 cursor-pointer text-sm leading-none hover:bg-error hover:text-white"
               onClick={e => {
                 e.stopPropagation();
                 onTabClose(tab.id);
@@ -41,7 +41,7 @@ function TabBar({ tabs, activeTabId, onTabSelect, onTabClose, onTabAdd }: TabBar
       ))}
       <button
         type="button"
-        className="flex items-center justify-center py-2 px-3 bg-surface border border-border rounded text-[#666] cursor-pointer text-sm leading-none hover:bg-white hover:text-[#333]"
+        className="flex items-center justify-center py-2 px-3 bg-surface dark:bg-neutral-700 border border-border dark:border-neutral-600 rounded text-neutral-500 dark:text-neutral-400 cursor-pointer text-sm leading-none hover:bg-white dark:hover:bg-neutral-600 hover:text-neutral-700 dark:hover:text-neutral-200"
         onClick={onTabAdd}
       >
         +

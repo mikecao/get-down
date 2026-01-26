@@ -1,8 +1,10 @@
+import { Moon, Sun } from 'lucide-react';
 import md5 from 'md5';
 import { useEffect, useState } from 'react';
 import TabBar from '@/components/TabBar';
 import TabPanel, { type Download } from '@/components/TabPanel';
 import { SAVE_PATH, TABS_STORAGE_KEY } from '@/lib/constants';
+import { useTheme } from '@/lib/useTheme';
 
 interface Tab {
   id: string;
@@ -58,6 +60,7 @@ function loadTabsFromStorage(): TabsState {
 
 function App() {
   const [tabsState, setTabsState] = useState<TabsState>(loadTabsFromStorage);
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     localStorage.setItem(TABS_STORAGE_KEY, JSON.stringify(tabsState));
@@ -103,7 +106,15 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col flex-1 min-h-0">
+    <div className="flex flex-col flex-1 min-h-0 relative">
+      <button
+        type="button"
+        onClick={toggleTheme}
+        className="absolute top-0 right-0 p-2 rounded hover:bg-neutral-200 dark:hover:bg-neutral-700"
+        title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+      >
+        {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+      </button>
       <TabBar
         tabs={tabsState.tabs}
         activeTabId={tabsState.activeTabId}
