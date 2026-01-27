@@ -44,9 +44,15 @@ function App() {
           onTabAdd={addTab}
           onTabRename={renameTab}
         />
-        {showSettings
-          ? activeTab && <Settings tabId={activeTab.id} />
-          : tabs.map(tab => <TabPanel key={tab.id} tabId={tab.id} />)}
+        {showSettings ? (
+          activeTab && (
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+              <Settings tabId={activeTab.id} />
+            </div>
+          )
+        ) : (
+          tabs.map(tab => <TabPanel key={tab.id} tabId={tab.id} />)
+        )}
       </Tabs>
     </div>
   );
