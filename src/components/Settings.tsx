@@ -29,7 +29,7 @@ export default function Settings({ tabId }: { tabId: string }) {
             onChange={e => handleChange('format', e.target.value)}
             placeholder="e.g., bestvideo+bestaudio, best, 720p"
           />
-          <span className="text-neutral-500 ">
+          <span className="text-neutral-500">
             Specify video format. Leave empty for default (best quality).
           </span>
         </div>
@@ -75,7 +75,7 @@ export default function Settings({ tabId }: { tabId: string }) {
             onChange={e => handleChange('rateLimit', e.target.value)}
             placeholder="e.g., 100K, 1M, 500K"
           />
-          <span className="text-neutral-500 ">
+          <span className="text-neutral-500">
             Limit download speed. Use K for KB/s, M for MB/s.
           </span>
         </div>
@@ -88,7 +88,7 @@ export default function Settings({ tabId }: { tabId: string }) {
             placeholder="e.g., 4"
             type="number"
           />
-          <span className="text-neutral-500 ">Number of fragments to download in parallel.</span>
+          <span className="text-neutral-500">Number of fragments to download in parallel.</span>
         </div>
       </section>
 
@@ -116,7 +116,7 @@ export default function Settings({ tabId }: { tabId: string }) {
               onChange={e => handleChange('subLangs', e.target.value)}
               placeholder="e.g., en, en,fr,es"
             />
-            <span className="text-neutral-500 ">Comma-separated language codes.</span>
+            <span className="text-neutral-500">Comma-separated language codes.</span>
           </div>
         )}
       </section>
@@ -135,7 +135,7 @@ export default function Settings({ tabId }: { tabId: string }) {
           <label htmlFor="restrictFilenames" className="">
             Restrict Filenames (--restrict-filenames)
           </label>
-          <span className="text-neutral-500 ">ASCII only, no spaces</span>
+          <span className="text-neutral-500">ASCII only, no spaces</span>
         </div>
 
         <div className="flex flex-col gap-1">
@@ -151,7 +151,7 @@ export default function Settings({ tabId }: { tabId: string }) {
               </option>
             ))}
           </select>
-          <span className="text-neutral-500 ">
+          <span className="text-neutral-500">
             Use cookies from browser for authenticated downloads.
           </span>
         </div>
@@ -167,7 +167,7 @@ export default function Settings({ tabId }: { tabId: string }) {
             onChange={e => handleChange('customArgs', e.target.value)}
             placeholder="e.g., --write-info-json --embed-thumbnail"
           />
-          <span className="text-neutral-500 ">Additional yt-dlp arguments (space-separated).</span>
+          <span className="text-neutral-500">Additional yt-dlp arguments (space-separated).</span>
         </div>
       </section>
     </div>

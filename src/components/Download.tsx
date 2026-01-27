@@ -99,8 +99,9 @@ export default function Download({
 
   const getStatusClasses = () => {
     const base = 'p-1 rounded font-bold';
-    if (status === ERROR) return `${base} text-error bg-error-bg`;
-    if (status === COMPLETE) return `${base} text-success bg-success-bg`;
+    if (status === ERROR) return `${base} text-error bg-error-bg dark:text-error-bg dark:bg-error`;
+    if (status === COMPLETE)
+      return `${base} text-success bg-success-bg dark:text-success-bg dark:bg-success`;
     return base;
   };
 
