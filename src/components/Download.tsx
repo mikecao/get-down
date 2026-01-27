@@ -8,6 +8,7 @@ import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constant
 import { buildYtDlpArgs } from '@/lib/settingsStore';
 import type { Settings } from '@/lib/store';
 import { cn } from '@/lib/utils';
+import { Terminal } from 'lucide-react';
 
 const log = debug('ui:download');
 log.log = console.log.bind(console);
@@ -110,15 +111,11 @@ export default function Download({
   return (
     <>
       <TableRow className="bg-white dark:bg-neutral-800">
-        <TableCell className="min-w-[50px] flex-1 p-[1.2rem]">
-          <div className="max-w-[800px] overflow-hidden text-ellipsis whitespace-nowrap">
-            {name}
-          </div>
-        </TableCell>
-        <TableCell className="w-[120px] p-[1.2rem]">
+        <TableCell className="truncate p-[1.2rem]">{name}</TableCell>
+        <TableCell className="p-[1.2rem]">
           <span className={getStatusClasses()}>{status}</span>
         </TableCell>
-        <TableCell className="w-[120px] p-[1.2rem]">
+        <TableCell className="p-[1.2rem]">
           {+progress > 0 ? (
             <div className="flex items-center gap-2.5">
               <Progress value={Number(progress)} className="w-[50px]" />
@@ -128,9 +125,9 @@ export default function Download({
             '--'
           )}
         </TableCell>
-        <TableCell className="w-[120px] p-[1.2rem]">{speed}</TableCell>
-        <TableCell className="w-[120px] p-[1.2rem]">{size}</TableCell>
-        <TableCell className="w-[50px] p-[1.2rem]">
+        <TableCell className="p-[1.2rem]">{speed}</TableCell>
+        <TableCell className="p-[1.2rem]">{size}</TableCell>
+        <TableCell className="p-[1.2rem]">
           <Button
             variant="ghost"
             size="icon"
@@ -142,20 +139,7 @@ export default function Download({
                 'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200',
             )}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="4 17 10 11 4 5" />
-              <line x1="12" y1="19" x2="20" y2="19" />
-            </svg>
+            <Terminal size={16} />
           </Button>
         </TableCell>
       </TableRow>
