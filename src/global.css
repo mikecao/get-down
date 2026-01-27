@@ -2,13 +2,57 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+:root {
+  --background: 0 0% 92%;
+  --foreground: 0 0% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 20%;
+  --primary: 0 0% 15%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 15%;
+  --muted: 0 0% 90%;
+  --muted-foreground: 0 0% 45%;
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 15%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 79%;
+  --input: 0 0% 79%;
+  --ring: 0 0% 15%;
+  --radius: 0.375rem;
+}
+
+.dark {
+  --background: 0 0% 9%;
+  --foreground: 0 0% 90%;
+  --card: 0 0% 12%;
+  --card-foreground: 0 0% 90%;
+  --popover: 0 0% 12%;
+  --popover-foreground: 0 0% 90%;
+  --primary: 0 0% 98%;
+  --primary-foreground: 0 0% 15%;
+  --secondary: 0 0% 22%;
+  --secondary-foreground: 0 0% 90%;
+  --muted: 0 0% 22%;
+  --muted-foreground: 0 0% 64%;
+  --accent: 0 0% 22%;
+  --accent-foreground: 0 0% 90%;
+  --destructive: 0 62% 50%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 30%;
+  --input: 0 0% 30%;
+  --ring: 0 0% 80%;
+}
+
 @theme inline {
   --font-family-mono: "JetBrains Mono", monospace;
+  --radius: 0.375rem;
 
   /* Custom app colors */
-  --color-border: #cacaca;
   --color-surface: #f5f5f5;
-  --color-background: #eaeaea;
   --color-success: #15a46e;
   --color-success-bg: #cef8e0;
   --color-error: #f75c46;
@@ -16,27 +60,26 @@
   --color-terminal: #1e1e1e;
   --color-terminal-text: #d4d4d4;
 
-  /* shadcn/ui colors - Light mode */
-  --color-background-hsl: hsl(0 0% 92%);
-  --color-foreground: hsl(0 0% 20%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(0 0% 20%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(0 0% 20%);
-  --color-primary: hsl(0 0% 15%);
-  --color-primary-foreground: hsl(0 0% 98%);
-  --color-secondary: hsl(0 0% 96%);
-  --color-secondary-foreground: hsl(0 0% 15%);
-  --color-muted: hsl(0 0% 96%);
-  --color-muted-foreground: hsl(0 0% 45%);
-  --color-accent: hsl(0 0% 96%);
-  --color-accent-foreground: hsl(0 0% 15%);
-  --color-destructive: hsl(0 84% 60%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border-hsl: hsl(0 0% 79%);
-  --color-input: hsl(0 0% 79%);
-  --color-ring: hsl(0 0% 15%);
-  --radius: 0.375rem;
+  /* shadcn color mappings */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
 }
 
 html,
@@ -47,43 +90,14 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: var(--color-background);
-  color: #333;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   overflow: hidden;
-}
-
-.dark html,
-.dark body,
-html.dark,
-body.dark {
-  background: #171717;
-  color: #e5e5e5;
-
-  /* shadcn/ui colors - Dark mode */
-  --color-background-hsl: hsl(0 0% 9%);
-  --color-foreground: hsl(0 0% 90%);
-  --color-card: hsl(0 0% 12%);
-  --color-card-foreground: hsl(0 0% 90%);
-  --color-popover: hsl(0 0% 12%);
-  --color-popover-foreground: hsl(0 0% 90%);
-  --color-primary: hsl(0 0% 98%);
-  --color-primary-foreground: hsl(0 0% 15%);
-  --color-secondary: hsl(0 0% 22%);
-  --color-secondary-foreground: hsl(0 0% 90%);
-  --color-muted: hsl(0 0% 22%);
-  --color-muted-foreground: hsl(0 0% 64%);
-  --color-accent: hsl(0 0% 22%);
-  --color-accent-foreground: hsl(0 0% 90%);
-  --color-destructive: hsl(0 62% 50%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border-hsl: hsl(0 0% 30%);
-  --color-input: hsl(0 0% 30%);
-  --color-ring: hsl(0 0% 80%);
 }
 
 #root {
