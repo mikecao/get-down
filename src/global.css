@@ -2,9 +2,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
+@theme inline {
   --font-family-mono: "JetBrains Mono", monospace;
 
+  /* Custom app colors */
   --color-border: #cacaca;
   --color-surface: #f5f5f5;
   --color-background: #eaeaea;
@@ -14,6 +15,28 @@
   --color-error-bg: #ffebe7;
   --color-terminal: #1e1e1e;
   --color-terminal-text: #d4d4d4;
+
+  /* shadcn/ui colors - Light mode */
+  --color-background-hsl: hsl(0 0% 92%);
+  --color-foreground: hsl(0 0% 20%);
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(0 0% 20%);
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(0 0% 20%);
+  --color-primary: hsl(0 0% 15%);
+  --color-primary-foreground: hsl(0 0% 98%);
+  --color-secondary: hsl(0 0% 96%);
+  --color-secondary-foreground: hsl(0 0% 15%);
+  --color-muted: hsl(0 0% 96%);
+  --color-muted-foreground: hsl(0 0% 45%);
+  --color-accent: hsl(0 0% 96%);
+  --color-accent-foreground: hsl(0 0% 15%);
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-border-hsl: hsl(0 0% 79%);
+  --color-input: hsl(0 0% 79%);
+  --color-ring: hsl(0 0% 15%);
+  --radius: 0.375rem;
 }
 
 html,
@@ -40,6 +63,27 @@ html.dark,
 body.dark {
   background: #171717;
   color: #e5e5e5;
+
+  /* shadcn/ui colors - Dark mode */
+  --color-background-hsl: hsl(0 0% 9%);
+  --color-foreground: hsl(0 0% 90%);
+  --color-card: hsl(0 0% 12%);
+  --color-card-foreground: hsl(0 0% 90%);
+  --color-popover: hsl(0 0% 12%);
+  --color-popover-foreground: hsl(0 0% 90%);
+  --color-primary: hsl(0 0% 98%);
+  --color-primary-foreground: hsl(0 0% 15%);
+  --color-secondary: hsl(0 0% 22%);
+  --color-secondary-foreground: hsl(0 0% 90%);
+  --color-muted: hsl(0 0% 22%);
+  --color-muted-foreground: hsl(0 0% 64%);
+  --color-accent: hsl(0 0% 22%);
+  --color-accent-foreground: hsl(0 0% 90%);
+  --color-destructive: hsl(0 62% 50%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-border-hsl: hsl(0 0% 30%);
+  --color-input: hsl(0 0% 30%);
+  --color-ring: hsl(0 0% 80%);
 }
 
 #root {

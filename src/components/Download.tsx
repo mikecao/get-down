@@ -1,12 +1,13 @@
 import { Command } from '@tauri-apps/plugin-shell';
 import debug from 'debug';
 import { useEffect, useRef, useState } from 'react';
-import Button from '@/components/Button';
-import Column from '@/components/Column';
-import ProgressBar from '@/components/ProgressBar';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { TableCell, TableRow } from '@/components/ui/table';
 import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
 import { buildYtDlpArgs } from '@/lib/settingsStore';
 import type { Settings } from '@/lib/store';
+import { cn } from '@/lib/utils';
 
 const log = debug('ui:download');
 log.log = console.log.bind(console);
@@ -99,35 +100,47 @@ export default function Download({
 
   const getStatusClasses = () => {
     const base = 'p-1 rounded font-bold';
-    if (status === ERROR) return `${base} text-error bg-error-bg dark:text-error-bg dark:bg-error`;
+    if (status === ERROR)
+      return cn(base, 'bg-error-bg text-error dark:bg-error dark:text-error-bg');
     if (status === COMPLETE)
-      return `${base} text-success bg-success-bg dark:text-success-bg dark:bg-success`;
+      return cn(base, 'bg-success-bg text-success dark:bg-success dark:text-success-bg');
     return base;
   };
 
   return (
-    <div className="border-border border-b last:border-0 dark:border-neutral-600">
-      <div className="flex bg-white dark:bg-neutral-800">
-        <Column flex>
+    <>
+      <TableRow className="bg-white dark:bg-neutral-800">
+        <TableCell className="min-w-[50px] flex-1 p-[1.2rem]">
           <div className="max-w-[800px] overflow-hidden text-ellipsis whitespace-nowrap">
             {name}
           </div>
-        </Column>
-        <Column width={120}>
+        </TableCell>
+        <TableCell className="w-[120px] p-[1.2rem]">
           <span className={getStatusClasses()}>{status}</span>
-        </Column>
-        <Column width={120}>{+progress > 0 ? <ProgressBar progress={progress} /> : '--'}</Column>
-        <Column width={120}>{speed}</Column>
-        <Column width={120}>{size}</Column>
-        <Column width={50}>
+        </TableCell>
+        <TableCell className="w-[120px] p-[1.2rem]">
+          {+progress > 0 ? (
+            <div className="flex items-center gap-2.5">
+              <Progress value={Number(progress)} className="w-[50px]" />
+              <div>{progress}%</div>
+            </div>
+          ) : (
+            '--'
+          )}
+        </TableCell>
+        <TableCell className="w-[120px] p-[1.2rem]">{speed}</TableCell>
+        <TableCell className="w-[120px] p-[1.2rem]">{size}</TableCell>
+        <TableCell className="w-[50px] p-[1.2rem]">
           <Button
+            variant="ghost"
+            size="icon"
             onClick={() => setExpanded(prev => !prev)}
             title="Toggle output"
-            className={`border-none bg-transparent p-1 text-neutral-500 hover:bg-neutral-200 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-600 dark:hover:text-neutral-200 ${
-              expanded
-                ? 'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200'
-                : ''
-            }`}
+            className={cn(
+              'h-6 w-6 text-neutral-500 dark:text-neutral-400',
+              expanded &&
+                'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200',
+            )}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -144,17 +157,21 @@ export default function Download({
               <line x1="12" y1="19" x2="20" y2="19" />
             </svg>
           </Button>
-        </Column>
-      </div>
+        </TableCell>
+      </TableRow>
       {expanded && (
-        <div className="max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all bg-terminal p-3 font-mono text-terminal-text">
-          {output.map(line => (
-            <div key={line.id} className="leading-[1.4]">
-              {line.text}
+        <TableRow>
+          <TableCell colSpan={6} className="p-0">
+            <div className="max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all bg-terminal p-3 font-mono text-terminal-text">
+              {output.map(line => (
+                <div key={line.id} className="leading-[1.4]">
+                  {line.text}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </TableCell>
+        </TableRow>
       )}
-    </div>
+    </>
   );
 }

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import Button from '@/components/Button';
 import Downloads from '@/components/Downloads';
 import DropZone from '@/components/DropZone';
 import SavePath from '@/components/SavePath';
 import Search from '@/components/Search';
+import { Button } from '@/components/ui/button';
+import { TabsContent } from '@/components/ui/tabs';
 import { useTabsStore } from '@/lib/store';
 
 interface TabPanelProps {
@@ -49,7 +50,11 @@ function TabPanel({ tabId }: TabPanelProps) {
   };
 
   return (
-    <div className="relative flex flex-1 flex-col gap-2.5" onDragEnter={handleEnter}>
+    <TabsContent
+      value={tabId}
+      className="relative flex flex-1 flex-col gap-2.5"
+      onDragEnter={handleEnter}
+    >
       <DropZone show={showDrop} onDrop={handleDrop} onLeave={handleLeave} />
       <div className="flex gap-2.5">
         <Search onSubmit={handleSubmit} />
@@ -61,7 +66,7 @@ function TabPanel({ tabId }: TabPanelProps) {
         <SavePath path={savePath} onChange={handleSavePathChange} />
         <Button onClick={handleClear}>Clear completed</Button>
       </div>
-    </div>
+    </TabsContent>
   );
 }
 

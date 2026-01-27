@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Button from './Button';
-import Input from './Input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 export default function Search({ onSubmit }: { onSubmit: (value: string) => void }) {
   const [value, setValue] = useState('');
@@ -26,6 +26,7 @@ export default function Search({ onSubmit }: { onSubmit: (value: string) => void
         value={value}
         onChange={e => setValue(e.target.value)}
         onKeyDown={handleKey}
+        className="flex-1"
       />
       <Button onClick={handleSubmit}>Download</Button>
     </div>

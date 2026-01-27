@@ -1,5 +1,5 @@
+import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { Download as DownloadType, Settings } from '@/lib/store';
-import Column from './Column';
 import Download from './Download';
 
 interface DownloadsProps {
@@ -11,36 +11,30 @@ interface DownloadsProps {
 export default function Downloads({ downloads, settings, onChange }: DownloadsProps) {
   return (
     <div className="flex flex-col overflow-hidden rounded border border-border bg-surface dark:border-neutral-600 dark:bg-neutral-800">
-      <div className="flex bg-neutral-100 text-neutral-700 dark:bg-neutral-900 dark:text-neutral-200">
-        <Column flex bold>
-          Name
-        </Column>
-        <Column width={120} bold>
-          Status
-        </Column>
-        <Column width={120} bold>
-          Progress
-        </Column>
-        <Column width={120} bold>
-          Speed
-        </Column>
-        <Column width={120} bold>
-          Size
-        </Column>
-        <Column width={50} bold />
-      </div>
-      <div className="flex flex-col overflow-y-auto overflow-x-hidden">
-        {downloads.map(({ id, url }) => {
-          return (
-            <Download
-              key={id}
-              url={url}
-              settings={settings}
-              onChange={status => onChange(id, status)}
-            />
-          );
-        })}
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-neutral-100 hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-900">
+            <TableHead className="min-w-[50px] flex-1">Name</TableHead>
+            <TableHead className="w-[120px]">Status</TableHead>
+            <TableHead className="w-[120px]">Progress</TableHead>
+            <TableHead className="w-[120px]">Speed</TableHead>
+            <TableHead className="w-[120px]">Size</TableHead>
+            <TableHead className="w-[50px]" />
+          </TableRow>
+        </TableHeader>
+        <TableBody className="overflow-y-auto overflow-x-hidden">
+          {downloads.map(({ id, url }) => {
+            return (
+              <Download
+                key={id}
+                url={url}
+                settings={settings}
+                onChange={status => onChange(id, status)}
+              />
+            );
+          })}
+        </TableBody>
+      </Table>
     </div>
   );
 }

@@ -1,4 +1,13 @@
-import Input from '@/components/Input';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { type Settings as SettingsType, useTabsStore } from '@/lib/store';
 
 const audioFormats = ['mp3', 'aac', 'flac', 'wav', 'opus', 'm4a', 'vorbis'];
@@ -23,8 +32,9 @@ export default function Settings({ tabId }: { tabId: string }) {
         <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Format Options</h3>
 
         <div className="flex flex-col gap-1">
-          <label className="">Format Selection (-f)</label>
+          <Label htmlFor="format">Format Selection (-f)</Label>
           <Input
+            id="format"
             value={settings.format}
             onChange={e => handleChange('format', e.target.value)}
             placeholder="e.g., bestvideo+bestaudio, best, 720p"
@@ -35,32 +45,32 @@ export default function Settings({ tabId }: { tabId: string }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
+          <Checkbox
             id="extractAudio"
             checked={settings.extractAudio}
-            onChange={e => handleChange('extractAudio', e.target.checked)}
-            className="h-4 w-4 rounded"
+            onCheckedChange={checked => handleChange('extractAudio', checked === true)}
           />
-          <label htmlFor="extractAudio" className="">
-            Extract Audio Only (-x)
-          </label>
+          <Label htmlFor="extractAudio">Extract Audio Only (-x)</Label>
         </div>
 
         {settings.extractAudio && (
           <div className="flex flex-col gap-1">
-            <label className="">Audio Format (--audio-format)</label>
-            <select
+            <Label htmlFor="audioFormat">Audio Format (--audio-format)</Label>
+            <Select
               value={settings.audioFormat}
-              onChange={e => handleChange('audioFormat', e.target.value)}
-              className="rounded border border-border bg-white px-4 py-2 outline-none dark:border-neutral-600 dark:bg-neutral-700"
+              onValueChange={value => handleChange('audioFormat', value)}
             >
-              {audioFormats.map(format => (
-                <option key={format} value={format}>
-                  {format.toUpperCase()}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger id="audioFormat">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {audioFormats.map(format => (
+                  <SelectItem key={format} value={format}>
+                    {format.toUpperCase()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         )}
       </section>
@@ -69,8 +79,9 @@ export default function Settings({ tabId }: { tabId: string }) {
         <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Download Options</h3>
 
         <div className="flex flex-col gap-1">
-          <label className="">Rate Limit (--rate-limit)</label>
+          <Label htmlFor="rateLimit">Rate Limit (--rate-limit)</Label>
           <Input
+            id="rateLimit"
             value={settings.rateLimit}
             onChange={e => handleChange('rateLimit', e.target.value)}
             placeholder="e.g., 100K, 1M, 500K"
@@ -81,8 +92,9 @@ export default function Settings({ tabId }: { tabId: string }) {
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="">Concurrent Fragments (-N)</label>
+          <Label htmlFor="concurrentFragments">Concurrent Fragments (-N)</Label>
           <Input
+            id="concurrentFragments"
             value={settings.concurrentFragments}
             onChange={e => handleChange('concurrentFragments', e.target.value)}
             placeholder="e.g., 4"
@@ -96,22 +108,19 @@ export default function Settings({ tabId }: { tabId: string }) {
         <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Subtitles</h3>
 
         <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
+          <Checkbox
             id="writeSubs"
             checked={settings.writeSubs}
-            onChange={e => handleChange('writeSubs', e.target.checked)}
-            className="h-4 w-4 rounded"
+            onCheckedChange={checked => handleChange('writeSubs', checked === true)}
           />
-          <label htmlFor="writeSubs" className="">
-            Download Subtitles (--write-subs)
-          </label>
+          <Label htmlFor="writeSubs">Download Subtitles (--write-subs)</Label>
         </div>
 
         {settings.writeSubs && (
           <div className="flex flex-col gap-1">
-            <label className="">Subtitle Languages (--sub-langs)</label>
+            <Label htmlFor="subLangs">Subtitle Languages (--sub-langs)</Label>
             <Input
+              id="subLangs"
               value={settings.subLangs}
               onChange={e => handleChange('subLangs', e.target.value)}
               placeholder="e.g., en, en,fr,es"
@@ -125,32 +134,32 @@ export default function Settings({ tabId }: { tabId: string }) {
         <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Other Options</h3>
 
         <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
+          <Checkbox
             id="restrictFilenames"
             checked={settings.restrictFilenames}
-            onChange={e => handleChange('restrictFilenames', e.target.checked)}
-            className="h-4 w-4 rounded"
+            onCheckedChange={checked => handleChange('restrictFilenames', checked === true)}
           />
-          <label htmlFor="restrictFilenames" className="">
-            Restrict Filenames (--restrict-filenames)
-          </label>
+          <Label htmlFor="restrictFilenames">Restrict Filenames (--restrict-filenames)</Label>
           <span className="text-neutral-500">ASCII only, no spaces</span>
         </div>
 
         <div className="flex flex-col gap-1">
-          <label className="">Cookies from Browser (--cookies-from-browser)</label>
-          <select
+          <Label htmlFor="cookiesFromBrowser">Cookies from Browser (--cookies-from-browser)</Label>
+          <Select
             value={settings.cookiesFromBrowser}
-            onChange={e => handleChange('cookiesFromBrowser', e.target.value)}
-            className="rounded border border-border bg-white px-4 py-2 outline-none dark:border-neutral-600 dark:bg-neutral-700"
+            onValueChange={value => handleChange('cookiesFromBrowser', value)}
           >
-            {browsers.map(browser => (
-              <option key={browser} value={browser}>
-                {browser ? browser.charAt(0).toUpperCase() + browser.slice(1) : 'None'}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger id="cookiesFromBrowser">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {browsers.map(browser => (
+                <SelectItem key={browser || 'none'} value={browser || 'none'}>
+                  {browser ? browser.charAt(0).toUpperCase() + browser.slice(1) : 'None'}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <span className="text-neutral-500">
             Use cookies from browser for authenticated downloads.
           </span>
@@ -161,8 +170,9 @@ export default function Settings({ tabId }: { tabId: string }) {
         <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Advanced</h3>
 
         <div className="flex flex-col gap-1">
-          <label className="">Custom Arguments</label>
+          <Label htmlFor="customArgs">Custom Arguments</Label>
           <Input
+            id="customArgs"
             value={settings.customArgs}
             onChange={e => handleChange('customArgs', e.target.value)}
             placeholder="e.g., --write-info-json --embed-thumbnail"
