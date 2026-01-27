@@ -39,7 +39,6 @@ function App() {
       <Tabs value={activeTabId} className="flex min-h-0 flex-1 flex-col">
         <TabBar
           tabs={tabs}
-          activeTabId={activeTabId}
           onTabSelect={selectTab}
           onTabClose={closeTab}
           onTabAdd={addTab}

@@ -1,7 +1,6 @@
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { cn } from '@/lib/utils';
 
 interface Tab {
   id: string;
@@ -10,7 +9,6 @@ interface Tab {
 
 interface TabBarProps {
   tabs: Tab[];
-  activeTabId: string;
   onTabSelect: (id: string) => void;
   onTabClose: (id: string) => void;
   onTabAdd: () => void;
@@ -20,7 +18,7 @@ interface TabBarProps {
 function CloseButton({ onClick }: { onClick: () => void }) {
   return (
     <span
-      className="ml-auto flex h-6 w-6 cursor-pointer items-center justify-center rounded border-none bg-transparent text-neutral-400 text-xl leading-none hover:bg-neutral-200 hover:text-neutral-600 dark:hover:bg-neutral-500 dark:hover:text-neutral-200"
+      className="flex h-4 w-4 cursor-pointer items-center justify-center rounded text-muted-foreground hover:bg-muted-foreground/20 hover:text-foreground"
       onClick={e => {
         e.stopPropagation();
         onClick();
@@ -89,38 +87,26 @@ function TabName({ name, onRename }: { name: string; onRename: (name: string) =>
   );
 }
 
-function TabBar({
-  tabs,
-  activeTabId,
-  onTabSelect,
-  onTabClose,
-  onTabAdd,
-  onTabRename,
-}: TabBarProps) {
+function TabBar({ tabs, onTabSelect, onTabClose, onTabAdd, onTabRename }: TabBarProps) {
   return (
-    <TabsList className="mb-2.5">
-      {tabs.map(tab => (
-        <TabsTrigger
-          key={tab.id}
-          value={tab.id}
-          onClick={() => onTabSelect(tab.id)}
-          className={cn(
-            'flex items-center gap-6 px-3',
-            tab.id !== activeTabId &&
-              'text-neutral-500 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200',
-          )}
-        >
-          <TabName name={tab.name} onRename={name => onTabRename(tab.id, name)} />
-          {tabs.length > 1 && <CloseButton onClick={() => onTabClose(tab.id)} />}
-        </TabsTrigger>
-      ))}
-      <Button
-        onClick={onTabAdd}
-        className="flex items-center justify-center px-3 text-xl leading-none"
-      >
+    <div className="mb-2.5 flex items-center gap-2">
+      <TabsList>
+        {tabs.map(tab => (
+          <TabsTrigger
+            key={tab.id}
+            value={tab.id}
+            onClick={() => onTabSelect(tab.id)}
+            className="flex items-center gap-4"
+          >
+            <TabName name={tab.name} onRename={name => onTabRename(tab.id, name)} />
+            {tabs.length > 1 && <CloseButton onClick={() => onTabClose(tab.id)} />}
+          </TabsTrigger>
+        ))}
+      </TabsList>
+      <Button variant="ghost" size="icon" onClick={onTabAdd} className="h-7 w-7 text-lg">
         +
       </Button>
-    </TabsList>
+    </div>
   );
 }
 
