@@ -11,16 +11,12 @@ interface ColorPickerProps {
 
 export function ColorPicker({ colorName, onColorChange }: ColorPickerProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const currentColor = COLOR_PALETTE.find(c => c.name === colorName);
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="icon" title="Change primary color">
-          <Palette
-            size={16}
-            style={currentColor?.value ? { color: currentColor.value } : undefined}
-          />
+          <Palette size={16} />
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="w-auto p-2">
