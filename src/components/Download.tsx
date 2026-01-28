@@ -102,11 +102,13 @@ export default function Download({
   }, [url, initialStatus]);
 
   const getStatusClasses = () => {
-    const base = 'p-1 rounded font-bold';
+    const base = 'px-2 py-1 rounded font-bold';
     if (status === ERROR)
       return cn(base, 'bg-error-bg text-error dark:bg-error dark:text-error-bg');
     if (status === COMPLETE)
       return cn(base, 'bg-success-bg text-success dark:bg-success dark:text-success-bg');
+    if (status === DOWNLOADING)
+      return cn(base, 'bg-info-bg text-info dark:bg-info dark:text-info-bg');
     return base;
   };
 
