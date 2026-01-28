@@ -59,7 +59,7 @@ export default function Settings({ tabId }: { tabId: string }) {
               <Label htmlFor="audioFormat">Audio Format (--audio-format)</Label>
               <Select
                 value={settings.audioFormat}
-                onValueChange={value => handleChange('audioFormat', value)}
+                onValueChange={value => value && handleChange('audioFormat', value)}
               >
                 <SelectTrigger id="audioFormat">
                   <SelectValue />
@@ -152,7 +152,7 @@ export default function Settings({ tabId }: { tabId: string }) {
             </Label>
             <Select
               value={settings.cookiesFromBrowser}
-              onValueChange={value => handleChange('cookiesFromBrowser', value)}
+              onValueChange={value => value && handleChange('cookiesFromBrowser', value)}
             >
               <SelectTrigger id="cookiesFromBrowser">
                 <SelectValue />
