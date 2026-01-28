@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getCurrentWindow } from '@tauri-apps/api/window';
 
 const THEME_KEY = 'theme';
 
@@ -20,6 +21,8 @@ export function useTheme() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+    // Set native window theme for titlebar
+    getCurrentWindow().setTheme(theme === 'dark' ? 'dark' : 'light');
   }, [theme]);
 
   const toggleTheme = () => {
