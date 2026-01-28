@@ -15,19 +15,21 @@ log.log = console.log.bind(console);
 
 export default function Download({
   url,
+  initialStatus,
   settings,
   onChange,
 }: {
   url: string;
+  initialStatus?: string;
   settings: Settings;
   onChange: (value: string) => void;
 }) {
   const [state, setState] = useState({
     name: url,
-    status: LOADING,
+    status: initialStatus || LOADING,
     size: '--',
     speed: '--',
-    progress: '0',
+    progress: initialStatus === COMPLETE ? '100' : '0',
   });
   const [output, setOutput] = useState<{ id: number; text: string }[]>([]);
   const [expanded, setExpanded] = useState(false);
@@ -93,11 +95,11 @@ export default function Download({
       pid.current = child.pid;
     }
 
-    if (url && !pid.current) {
+    if (url && !pid.current && initialStatus !== COMPLETE && initialStatus !== ERROR) {
       pid.current = 1;
       spawn();
     }
-  }, [url]);
+  }, [url, initialStatus]);
 
   const getStatusClasses = () => {
     const base = 'p-1 rounded font-bold';

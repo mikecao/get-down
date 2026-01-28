@@ -23,11 +23,12 @@ export default function Downloads({ downloads, settings, onChange }: DownloadsPr
           </TableRow>
         </TableHeader>
         <TableBody className="overflow-y-auto overflow-x-hidden">
-          {downloads.map(({ id, url }) => {
+          {downloads.map(({ id, url, status }) => {
             return (
               <Download
                 key={id}
                 url={url}
+                initialStatus={status}
                 settings={settings}
                 onChange={status => onChange(id, status)}
               />
