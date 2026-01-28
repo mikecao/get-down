@@ -132,19 +132,21 @@ export default function Download({
         <TableCell className="p-[1.2rem]">{speed}</TableCell>
         <TableCell className="p-[1.2rem]">{size}</TableCell>
         <TableCell className="p-[1.2rem]">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setExpanded(prev => !prev)}
-            title="Toggle output"
-            className={cn(
-              'h-6 w-6 text-neutral-500 dark:text-neutral-400',
-              expanded &&
-                'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200',
-            )}
-          >
-            <Terminal size={16} />
-          </Button>
+          {output.length > 0 && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setExpanded(prev => !prev)}
+              title="Toggle output"
+              className={cn(
+                'h-6 w-6 text-neutral-500 dark:text-neutral-400',
+                expanded &&
+                  'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200',
+              )}
+            >
+              <Terminal size={16} />
+            </Button>
+          )}
         </TableCell>
       </TableRow>
       {expanded && (
