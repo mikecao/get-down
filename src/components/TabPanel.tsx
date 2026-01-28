@@ -1,6 +1,4 @@
-import { useState } from 'react';
 import Downloads from '@/components/Downloads';
-import DropZone from '@/components/DropZone';
 import SavePath from '@/components/SavePath';
 import Search from '@/components/Search';
 import { Button } from '@/components/ui/button';
@@ -12,7 +10,6 @@ interface TabPanelProps {
 }
 
 function TabPanel({ tabId }: TabPanelProps) {
-  const [showDrop, setShowDrop] = useState(false);
   const { tabs, addDownload, updateDownloadStatus, clearCompleted, setSavePath } = useTabsStore();
 
   const tab = tabs.find(t => t.id === tabId);
@@ -36,26 +33,8 @@ function TabPanel({ tabId }: TabPanelProps) {
     setSavePath(tabId, path);
   };
 
-  const handleDrop = (value: string) => {
-    setShowDrop(false);
-    handleSubmit(value);
-  };
-
-  const handleEnter = () => {
-    setShowDrop(true);
-  };
-
-  const handleLeave = () => {
-    setShowDrop(false);
-  };
-
   return (
-    <TabsContent
-      value={tabId}
-      className="relative flex flex-1 flex-col gap-2.5"
-      onDragEnter={handleEnter}
-    >
-      <DropZone show={showDrop} onDrop={handleDrop} onLeave={handleLeave} />
+    <TabsContent value={tabId} className="relative flex flex-1 flex-col gap-2.5">
       <div className="flex gap-2.5">
         <Search onSubmit={handleSubmit} />
       </div>
