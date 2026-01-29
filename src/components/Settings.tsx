@@ -1,3 +1,6 @@
+import { X } from 'lucide-react';
+import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useSettingsStore } from '@/lib/settingsStore';
 import { type Settings as SettingsType, useTabsStore } from '@/lib/store';
 
 const audioFormats = ['mp3', 'aac', 'flac', 'wav', 'opus', 'm4a', 'vorbis'];
@@ -15,8 +19,19 @@ const browsers = ['', 'chrome', 'firefox', 'edge', 'safari', 'opera', 'brave'];
 
 export default function Settings({ tabId }: { tabId: string }) {
   const { tabs, updateSettings } = useTabsStore();
+  const { toggleSettings } = useSettingsStore();
   const tab = tabs.find(t => t.id === tabId);
   const settings = tab?.settings;
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        toggleSettings(tabId);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [tabId, toggleSettings]);
 
   if (!settings) return null;
 
@@ -27,7 +42,17 @@ export default function Settings({ tabId }: { tabId: string }) {
   return (
     <div className="relative min-h-0 flex-1">
       <div className="absolute inset-0 flex flex-col gap-6 overflow-y-auto p-4">
-        <h2 className="font-bold text-lg">yt-dlp Settings</h2>
+        <div className="flex items-center justify-between">
+          <h2 className="font-bold text-lg">yt-dlp Settings</h2>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => toggleSettings(tabId)}
+            title="Close settings"
+          >
+            <X size={16} />
+          </Button>
+        </div>
 
         <section className="flex flex-col gap-4">
           <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Format Options</h3>
