@@ -2,14 +2,16 @@ import { create } from 'zustand';
 import type { Settings } from './store';
 
 interface SettingsUIState {
-  showSettings: boolean;
-  toggleSettings: () => void;
+  settingsOpenForTabId: string | null;
+  toggleSettings: (tabId: string) => void;
 }
 
 export const useSettingsStore = create<SettingsUIState>()(set => ({
-  showSettings: false,
-  toggleSettings: () => {
-    set(state => ({ showSettings: !state.showSettings }));
+  settingsOpenForTabId: null,
+  toggleSettings: (tabId: string) => {
+    set(state => ({
+      settingsOpenForTabId: state.settingsOpenForTabId === tabId ? null : tabId,
+    }));
   },
 }));
 

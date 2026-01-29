@@ -5,21 +5,14 @@ import { cn } from '@/lib/utils';
 
 const Popover = BasePopover.Root;
 
-interface PopoverTriggerProps
-  extends React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> {
+interface PopoverTriggerProps extends React.ComponentPropsWithoutRef<typeof BasePopover.Trigger> {
   asChild?: boolean;
 }
 
 const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
   ({ asChild, children, ...props }, ref) => {
     if (asChild && React.isValidElement(children)) {
-      return (
-        <BasePopover.Trigger
-          ref={ref}
-          render={children}
-          {...props}
-        />
-      );
+      return <BasePopover.Trigger ref={ref} render={children} {...props} />;
     }
     return (
       <BasePopover.Trigger ref={ref} {...props}>
@@ -30,8 +23,7 @@ const PopoverTrigger = React.forwardRef<HTMLButtonElement, PopoverTriggerProps>(
 );
 PopoverTrigger.displayName = 'PopoverTrigger';
 
-interface PopoverContentProps
-  extends React.ComponentPropsWithoutRef<typeof BasePopover.Popup> {
+interface PopoverContentProps extends React.ComponentPropsWithoutRef<typeof BasePopover.Popup> {
   align?: 'start' | 'center' | 'end';
   sideOffset?: number;
 }

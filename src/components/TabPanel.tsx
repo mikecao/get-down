@@ -1,8 +1,11 @@
+import { Settings as SettingsIcon } from 'lucide-react';
 import Downloads from '@/components/Downloads';
 import SavePath from '@/components/SavePath';
 import Search from '@/components/Search';
+import Settings from '@/components/Settings';
 import { Button } from '@/components/ui/button';
 import { TabsContent } from '@/components/ui/tabs';
+import { useSettingsStore } from '@/lib/settingsStore';
 import { useTabsStore } from '@/lib/store';
 
 interface TabPanelProps {
@@ -11,11 +14,13 @@ interface TabPanelProps {
 
 function TabPanel({ tabId }: TabPanelProps) {
   const { tabs, addDownload, updateDownloadStatus, clearCompleted, setSavePath } = useTabsStore();
+  const { settingsOpenForTabId, toggleSettings } = useSettingsStore();
 
   const tab = tabs.find(t => t.id === tabId);
   if (!tab) return null;
 
   const { downloads, savePath, settings } = tab;
+  const showSettings = settingsOpenForTabId === tabId;
 
   const handleSubmit = (url: string) => {
     addDownload(tabId, url);
@@ -39,10 +44,25 @@ function TabPanel({ tabId }: TabPanelProps) {
         <Search onSubmit={handleSubmit} />
       </div>
       <div className="flex min-h-0 flex-1 flex-col overflow-auto">
-        <Downloads downloads={downloads} settings={settings} onChange={handleChange} />
+        {showSettings ? (
+          <Settings tabId={tabId} />
+        ) : (
+          <Downloads downloads={downloads} settings={settings} onChange={handleChange} />
+        )}
       </div>
       <div className="flex items-center justify-between gap-2.5">
-        <SavePath path={savePath} onChange={handleSavePathChange} />
+        <div className="flex items-center gap-2.5">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => toggleSettings(tabId)}
+            className={showSettings ? 'bg-neutral-200 dark:bg-neutral-700' : ''}
+            title={showSettings ? 'Close settings' : 'Open settings'}
+          >
+            <SettingsIcon size={16} />
+          </Button>
+          <SavePath path={savePath} onChange={handleSavePathChange} />
+        </div>
         <Button onClick={handleClear}>Clear completed</Button>
       </div>
     </TabsContent>
