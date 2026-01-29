@@ -40,16 +40,20 @@ function TabPanel({ tabId }: TabPanelProps) {
 
   return (
     <TabsContent value={tabId} className="relative flex flex-1 flex-col gap-2.5">
-      <div className="flex gap-2.5">
-        <Search onSubmit={handleSubmit} />
-      </div>
-      <div className="flex min-h-0 flex-1 flex-col overflow-auto">
-        {showSettings ? (
+      {showSettings ? (
+        <div className="flex min-h-0 flex-1 flex-col overflow-auto">
           <Settings tabId={tabId} />
-        ) : (
-          <Downloads downloads={downloads} settings={settings} onChange={handleChange} />
-        )}
-      </div>
+        </div>
+      ) : (
+        <>
+          <div className="flex gap-2.5">
+            <Search onSubmit={handleSubmit} />
+          </div>
+          <div className="flex min-h-0 flex-1 flex-col overflow-auto">
+            <Downloads downloads={downloads} settings={settings} onChange={handleChange} />
+          </div>
+        </>
+      )}
       <div className="flex items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
           <Button
