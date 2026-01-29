@@ -9,7 +9,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "get-down",
+        "title": "Get Down",
         "fullscreen": false,
         "resizable": true,
         "height": 800,
