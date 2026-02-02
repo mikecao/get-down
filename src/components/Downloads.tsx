@@ -6,9 +6,10 @@ interface DownloadsProps {
   downloads: DownloadType[];
   settings: Settings;
   onChange: (id: string, status: string) => void;
+  onRemove: (id: string) => void;
 }
 
-export default function Downloads({ downloads, settings, onChange }: DownloadsProps) {
+export default function Downloads({ downloads, settings, onChange, onRemove }: DownloadsProps) {
   return (
     <div className="flex flex-col overflow-hidden rounded border border-border bg-surface dark:border-neutral-600 dark:bg-neutral-800">
       <Table className="table-fixed">
@@ -19,7 +20,7 @@ export default function Downloads({ downloads, settings, onChange }: DownloadsPr
             <TableHead className="w-[140px]">Progress</TableHead>
             <TableHead className="w-[100px]">Speed</TableHead>
             <TableHead className="w-[80px]">Size</TableHead>
-            <TableHead className="w-[50px]" />
+            <TableHead className="w-[80px]" />
           </TableRow>
         </TableHeader>
         <TableBody className="overflow-y-auto overflow-x-hidden">
@@ -31,6 +32,7 @@ export default function Downloads({ downloads, settings, onChange }: DownloadsPr
                 initialStatus={status}
                 settings={settings}
                 onChange={status => onChange(id, status)}
+                onRemove={() => onRemove(id)}
               />
             );
           })}

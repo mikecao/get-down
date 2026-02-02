@@ -52,6 +52,7 @@ interface TabsState {
   renameTab: (id: string, name: string) => void;
   addDownload: (tabId: string, url: string) => void;
   updateDownloadStatus: (tabId: string, downloadId: string, status: string) => void;
+  removeDownload: (tabId: string, downloadId: string) => void;
   clearCompleted: (tabId: string) => void;
   setSavePath: (tabId: string, path: string) => void;
   updateSettings: (tabId: string, settings: Partial<Settings>) => void;
@@ -126,6 +127,19 @@ export const useTabsStore = create<TabsState>()(
               ? {
                   ...tab,
                   downloads: tab.downloads.map(d => (d.id === downloadId ? { ...d, status } : d)),
+                }
+              : tab,
+          ),
+        }));
+      },
+
+      removeDownload: (tabId: string, downloadId: string) => {
+        set(state => ({
+          tabs: state.tabs.map(tab =>
+            tab.id === tabId
+              ? {
+                  ...tab,
+                  downloads: tab.downloads.filter(d => d.id !== downloadId),
                 }
               : tab,
           ),

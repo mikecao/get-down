@@ -13,7 +13,8 @@ interface TabPanelProps {
 }
 
 function TabPanel({ tabId }: TabPanelProps) {
-  const { tabs, addDownload, updateDownloadStatus, clearCompleted, setSavePath } = useTabsStore();
+  const { tabs, addDownload, updateDownloadStatus, removeDownload, clearCompleted, setSavePath } =
+    useTabsStore();
   const { settingsOpenForTabId, toggleSettings } = useSettingsStore();
 
   const tab = tabs.find(t => t.id === tabId);
@@ -28,6 +29,10 @@ function TabPanel({ tabId }: TabPanelProps) {
 
   const handleChange = (downloadId: string, status: string) => {
     updateDownloadStatus(tabId, downloadId, status);
+  };
+
+  const handleRemove = (downloadId: string) => {
+    removeDownload(tabId, downloadId);
   };
 
   const handleClear = () => {
@@ -50,7 +55,12 @@ function TabPanel({ tabId }: TabPanelProps) {
             <Search onSubmit={handleSubmit} />
           </div>
           <div className="flex min-h-0 flex-1 flex-col overflow-auto">
-            <Downloads downloads={downloads} settings={settings} onChange={handleChange} />
+            <Downloads
+              downloads={downloads}
+              settings={settings}
+              onChange={handleChange}
+              onRemove={handleRemove}
+            />
           </div>
         </>
       )}

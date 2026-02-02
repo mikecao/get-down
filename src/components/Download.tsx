@@ -1,14 +1,15 @@
+import type { Child } from '@tauri-apps/plugin-shell';
 import { Command } from '@tauri-apps/plugin-shell';
 import debug from 'debug';
+import { Terminal, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
+import { CANCELLED, COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
 import { buildYtDlpArgs } from '@/lib/settingsStore';
 import type { Settings } from '@/lib/store';
 import { cn } from '@/lib/utils';
-import { Terminal } from 'lucide-react';
 
 const log = debug('ui:download');
 log.log = console.log.bind(console);
@@ -18,11 +19,13 @@ export default function Download({
   initialStatus,
   settings,
   onChange,
+  onRemove,
 }: {
   url: string;
   initialStatus?: string;
   settings: Settings;
   onChange: (value: string) => void;
+  onRemove: () => void;
 }) {
   const [state, setState] = useState({
     name: url,
@@ -36,6 +39,7 @@ export default function Download({
   const { name, status, size, speed, progress } = state;
   const path = localStorage.getItem(SAVE_PATH) || '.';
   const pid = useRef(0);
+  const childRef = useRef<Child | null>(null);
   const outputId = useRef(0);
 
   function stdout(line: string) {
@@ -93,6 +97,7 @@ export default function Download({
       log(`pid: ${child.pid}`);
 
       pid.current = child.pid;
+      childRef.current = child;
     }
 
     if (url && !pid.current && initialStatus !== COMPLETE && initialStatus !== ERROR) {
@@ -100,6 +105,17 @@ export default function Download({
       spawn();
     }
   }, [url, initialStatus]);
+
+  const handleRemove = async () => {
+    const isInProgress = status === LOADING || status === DOWNLOADING;
+    if (isInProgress && childRef.current) {
+      log('Cancelled manually');
+      await childRef.current.kill();
+      setState(state => ({ ...state, status: CANCELLED }));
+      onChange(CANCELLED);
+    }
+    onRemove();
+  };
 
   const getStatusClasses = () => {
     const base = 'px-2 py-1 rounded font-bold';
@@ -132,21 +148,32 @@ export default function Download({
         <TableCell className="p-[1.2rem]">{speed}</TableCell>
         <TableCell className="p-[1.2rem]">{size}</TableCell>
         <TableCell className="p-[1.2rem]">
-          {output.length > 0 && (
+          <div className="flex gap-1">
+            {output.length > 0 && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setExpanded(prev => !prev)}
+                title="Toggle output"
+                className={cn(
+                  'h-6 w-6 text-neutral-500 dark:text-neutral-400',
+                  expanded &&
+                    'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200',
+                )}
+              >
+                <Terminal size={16} />
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setExpanded(prev => !prev)}
-              title="Toggle output"
-              className={cn(
-                'h-6 w-6 text-neutral-500 dark:text-neutral-400',
-                expanded &&
-                  'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200',
-              )}
+              onClick={handleRemove}
+              title={status === LOADING || status === DOWNLOADING ? 'Cancel download' : 'Remove'}
+              className="h-6 w-6 text-neutral-500 hover:text-error dark:text-neutral-400 dark:hover:text-error"
             >
-              <Terminal size={16} />
+              <X size={16} />
             </Button>
-          )}
+          </div>
         </TableCell>
       </TableRow>
       {expanded && (
