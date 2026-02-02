@@ -148,7 +148,7 @@ export default function Download({
         <TableCell className="p-[1.2rem]">{speed}</TableCell>
         <TableCell className="p-[1.2rem]">{size}</TableCell>
         <TableCell className="p-[1.2rem]">
-          <div className="flex gap-1">
+          <div className="flex justify-end gap-1">
             {output.length > 0 && (
               <Button
                 variant="ghost"
