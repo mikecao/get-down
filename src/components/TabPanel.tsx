@@ -44,7 +44,7 @@ function TabPanel({ tabId }: TabPanelProps) {
   };
 
   return (
-    <TabsContent value={tabId} className="relative flex flex-1 flex-col gap-2.5">
+    <TabsContent value={tabId} className="relative flex flex-1 flex-col gap-4">
       {showSettings ? (
         <div className="flex min-h-0 flex-1 flex-col overflow-auto">
           <Settings tabId={tabId} />

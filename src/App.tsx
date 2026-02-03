@@ -7,8 +7,8 @@ import TabBar from '@/components/TabBar';
 import TabPanel from '@/components/TabPanel';
 import { Button } from '@/components/ui/button';
 import { Tabs } from '@/components/ui/tabs';
-import { usePrimaryColor } from '@/lib/usePrimaryColor';
 import { useTabsStore } from '@/lib/store';
+import { usePrimaryColor } from '@/lib/usePrimaryColor';
 import { useTheme } from '@/lib/useTheme';
 
 function App() {

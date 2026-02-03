@@ -15,12 +15,12 @@ export default function Downloads({ downloads, settings, onChange, onRemove }: D
       <Table className="table-fixed">
         <TableHeader>
           <TableRow className="bg-neutral-100 hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-900">
-            <TableHead>Name</TableHead>
-            <TableHead className="w-[100px]">Status</TableHead>
-            <TableHead className="w-[140px]">Progress</TableHead>
-            <TableHead className="w-[100px]">Speed</TableHead>
-            <TableHead className="w-[80px]">Size</TableHead>
-            <TableHead className="w-[80px]" />
+            <TableHead className="px-4">Name</TableHead>
+            <TableHead className="w-[100px] px-4">Status</TableHead>
+            <TableHead className="w-[140px] px-4">Progress</TableHead>
+            <TableHead className="w-[100px] px-4">Speed</TableHead>
+            <TableHead className="w-[80px] px-4">Size</TableHead>
+            <TableHead className="w-[80px] px-4" />
           </TableRow>
         </TableHeader>
         <TableBody className="overflow-y-auto overflow-x-hidden">
