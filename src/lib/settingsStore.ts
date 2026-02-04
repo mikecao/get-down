@@ -22,6 +22,8 @@ export function buildYtDlpArgs(settings: Settings, url: string, outputPath: stri
     `${outputPath}/%(title)s.%(ext)s`,
     '--no-mtime',
     '--no-overwrites',
+    '--js-runtimes',
+    'deno,nodejs',
   ];
 
   if (settings.format) {
