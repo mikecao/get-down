@@ -131,11 +131,11 @@ export default function Download({
   return (
     <>
       <TableRow className="bg-white dark:bg-neutral-800">
-        <TableCell className="truncate p-[1.2rem]">{name}</TableCell>
-        <TableCell className="p-[1.2rem]">
+        <TableCell className="truncate p-4">{name}</TableCell>
+        <TableCell className="p-4">
           <span className={getStatusClasses()}>{status}</span>
         </TableCell>
-        <TableCell className="p-[1.2rem]">
+        <TableCell className="p-4">
           {+progress > 0 ? (
             <div className="flex items-center gap-2.5">
               <Progress value={Number(progress)} className="w-[50px]" />
@@ -145,9 +145,9 @@ export default function Download({
             '--'
           )}
         </TableCell>
-        <TableCell className="p-[1.2rem]">{speed}</TableCell>
-        <TableCell className="p-[1.2rem]">{size}</TableCell>
-        <TableCell className="p-[1.2rem]">
+        <TableCell className="p-4">{speed}</TableCell>
+        <TableCell className="p-4">{size}</TableCell>
+        <TableCell className="p-4">
           <div className="flex justify-end gap-1">
             {output.length > 0 && (
               <Button
