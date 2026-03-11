@@ -41,6 +41,7 @@ export default function Download({
   const pid = useRef(0);
   const childRef = useRef<Child | null>(null);
   const outputId = useRef(0);
+  const outputRef = useRef<HTMLDivElement | null>(null);
 
   function stdout(line: string) {
     const name = line.match(/Destination:\s+(.*)/);
@@ -105,6 +106,14 @@ export default function Download({
       spawn();
     }
   }, [url, initialStatus]);
+
+  useEffect(() => {
+    if (!expanded || !outputRef.current) {
+      return;
+    }
+
+    outputRef.current.scrollTop = outputRef.current.scrollHeight;
+  }, [expanded, output.length]);
 
   const handleRemove = async () => {
     const isInProgress = status === LOADING || status === DOWNLOADING;
@@ -179,7 +188,10 @@ export default function Download({
       {expanded && (
         <TableRow>
           <TableCell colSpan={6} className="p-0">
-            <div className="max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all bg-terminal p-3 font-mono text-terminal-text">
+            <div
+              ref={outputRef}
+              className="max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all rounded-b-md border-white/6 border-t bg-terminal p-3 font-mono text-terminal-text"
+            >
               {output.map(line => (
                 <div key={line.id} className="leading-[1.4]">
                   {line.text}

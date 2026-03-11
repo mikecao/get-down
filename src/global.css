@@ -96,8 +96,8 @@
   --color-error-bg: #ffebe7;
   --color-info: #2563eb;
   --color-info-bg: #dbeafe;
-  --color-terminal: #1e1e1e;
-  --color-terminal-text: #d4d4d4;
+  --color-terminal: #0d1117;
+  --color-terminal-text: #d7dde7;
 
   /* shadcn color mappings */
   --color-background: var(--background);
