@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { getSetting, setSetting } from './db';
 
 const PRIMARY_COLOR_KEY = 'primary-color';
 
@@ -25,27 +26,41 @@ export const COLOR_PALETTE = [
 
 export type PrimaryColorName = (typeof COLOR_PALETTE)[number]['name'];
 
+function applyColor(colorName: PrimaryColorName) {
+  const color = COLOR_PALETTE.find(c => c.name === colorName);
+  if (color?.value) {
+    document.documentElement.style.setProperty('--primary', color.value);
+    document.documentElement.style.setProperty('--primary-foreground', color.foreground);
+    document.documentElement.style.setProperty('--ring', color.value);
+  } else {
+    document.documentElement.style.removeProperty('--primary');
+    document.documentElement.style.removeProperty('--primary-foreground');
+    document.documentElement.style.removeProperty('--ring');
+  }
+}
+
 export function usePrimaryColor() {
-  const [colorName, setColorName] = useState<PrimaryColorName>(() => {
-    const stored = localStorage.getItem(PRIMARY_COLOR_KEY);
-    const found = COLOR_PALETTE.find(c => c.name === stored);
-    return found ? found.name : 'default';
-  });
+  const [colorName, setColorName] = useState<PrimaryColorName>('default');
+  const [loaded, setLoaded] = useState(false);
 
+  // Load saved color from SQLite on mount
   useEffect(() => {
-    localStorage.setItem(PRIMARY_COLOR_KEY, colorName);
-    const color = COLOR_PALETTE.find(c => c.name === colorName);
+    getSetting(PRIMARY_COLOR_KEY).then(stored => {
+      const found = COLOR_PALETTE.find(c => c.name === stored);
+      if (found) {
+        setColorName(found.name);
+      }
+      setLoaded(true);
+    });
+  }, []);
 
-    if (color?.value) {
-      document.documentElement.style.setProperty('--primary', color.value);
-      document.documentElement.style.setProperty('--primary-foreground', color.foreground);
-      document.documentElement.style.setProperty('--ring', color.value);
-    } else {
-      document.documentElement.style.removeProperty('--primary');
-      document.documentElement.style.removeProperty('--primary-foreground');
-      document.documentElement.style.removeProperty('--ring');
+  // Apply color and persist to SQLite on change
+  useEffect(() => {
+    applyColor(colorName);
+    if (loaded) {
+      setSetting(PRIMARY_COLOR_KEY, colorName);
     }
-  }, [colorName]);
+  }, [colorName, loaded]);
 
   return { colorName, setColorName };
 }

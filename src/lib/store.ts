@@ -1,7 +1,8 @@
 import md5 from 'md5';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import { COMPLETE, ERROR, SAVE_PATH, TABS_STORAGE_KEY } from './constants';
+import { getSetting, setSetting } from './db';
 
 export interface Download {
   id: string;
@@ -68,7 +69,30 @@ function createTab(name: string, savePath: string): Tab {
   };
 }
 
-const getDefaultSavePath = () => localStorage.getItem(SAVE_PATH) || '';
+// Cache the save path in memory so new tabs can read it synchronously
+let cachedSavePath = '';
+
+export async function loadSavePath(): Promise<string> {
+  const path = await getSetting(SAVE_PATH);
+  cachedSavePath = path || '';
+  return cachedSavePath;
+}
+
+const getDefaultSavePath = () => cachedSavePath;
+
+const sqliteStorage = createJSONStorage<TabsState>(() => ({
+  getItem: async (name: string): Promise<string | null> => {
+    return getSetting(name);
+  },
+  setItem: async (name: string, value: string): Promise<void> => {
+    await setSetting(name, value);
+  },
+  removeItem: async (name: string): Promise<void> => {
+    const { getDb } = await import('./db');
+    const db = await getDb();
+    await db.execute('DELETE FROM settings WHERE key = $1', [name]);
+  },
+}));
 
 export const useTabsStore = create<TabsState>()(
   persist(
@@ -160,7 +184,8 @@ export const useTabsStore = create<TabsState>()(
       },
 
       setSavePath: (tabId: string, path: string) => {
-        localStorage.setItem(SAVE_PATH, path);
+        cachedSavePath = path;
+        setSetting(SAVE_PATH, path);
         set(state => ({
           tabs: state.tabs.map(tab => (tab.id === tabId ? { ...tab, savePath: path } : tab)),
         }));
@@ -176,6 +201,7 @@ export const useTabsStore = create<TabsState>()(
     }),
     {
       name: TABS_STORAGE_KEY,
+      storage: sqliteStorage,
       partialize: state => ({
         tabs: state.tabs.map(tab => ({
           ...tab,

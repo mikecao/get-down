@@ -18,6 +18,11 @@
     "dialog:allow-message",
     "dialog:allow-ask",
     "dialog:allow-confirm",
+    "sql:default",
+    "sql:allow-load",
+    "sql:allow-execute",
+    "sql:allow-select",
+    "sql:allow-close",
     {
       "identifier": "shell:allow-spawn",
       "allow": [

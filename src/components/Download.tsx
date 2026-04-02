@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { CANCELLED, COMPLETE, DOWNLOADING, ERROR, LOADING, SAVE_PATH } from '@/lib/constants';
+import { CANCELLED, COMPLETE, DOWNLOADING, ERROR, LOADING } from '@/lib/constants';
 import { buildYtDlpArgs } from '@/lib/settingsStore';
 import type { Settings } from '@/lib/store';
 import { cn } from '@/lib/utils';
@@ -18,12 +18,14 @@ export default function Download({
   url,
   initialStatus,
   settings,
+  savePath,
   onChange,
   onRemove,
 }: {
   url: string;
   initialStatus?: string;
   settings: Settings;
+  savePath: string;
   onChange: (value: string) => void;
   onRemove: () => void;
 }) {
@@ -37,7 +39,7 @@ export default function Download({
   const [output, setOutput] = useState<{ id: number; text: string }[]>([]);
   const [expanded, setExpanded] = useState(false);
   const { name, status, size, speed, progress } = state;
-  const path = localStorage.getItem(SAVE_PATH) || '.';
+  const path = savePath || '.';
   const pid = useRef(0);
   const childRef = useRef<Child | null>(null);
   const outputId = useRef(0);

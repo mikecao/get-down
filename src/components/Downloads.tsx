@@ -5,11 +5,18 @@ import Download from './Download';
 interface DownloadsProps {
   downloads: DownloadType[];
   settings: Settings;
+  savePath: string;
   onChange: (id: string, status: string) => void;
   onRemove: (id: string) => void;
 }
 
-export default function Downloads({ downloads, settings, onChange, onRemove }: DownloadsProps) {
+export default function Downloads({
+  downloads,
+  settings,
+  savePath,
+  onChange,
+  onRemove,
+}: DownloadsProps) {
   return (
     <div className="flex flex-col overflow-hidden rounded border border-border bg-surface dark:border-neutral-600 dark:bg-neutral-800">
       <Table className="table-fixed">
@@ -31,6 +38,7 @@ export default function Downloads({ downloads, settings, onChange, onRemove }: D
                 url={url}
                 initialStatus={status}
                 settings={settings}
+                savePath={savePath}
                 onChange={status => onChange(id, status)}
                 onRemove={() => onRemove(id)}
               />

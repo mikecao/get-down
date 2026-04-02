@@ -58,6 +58,7 @@ function TabPanel({ tabId }: TabPanelProps) {
             <Downloads
               downloads={downloads}
               settings={settings}
+              savePath={savePath}
               onChange={handleChange}
               onRemove={handleRemove}
             />
