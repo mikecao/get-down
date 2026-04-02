@@ -200,35 +200,6 @@ export default function Settings({ tabId }: { tabId: string }) {
           <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Authentication</h3>
 
           <div className="flex flex-col gap-1">
-            <Label htmlFor="username">Username (--username)</Label>
-            <Input
-              id="username"
-              value={settings.username}
-              onChange={e => handleChange('username', e.target.value)}
-              placeholder="Enter username"
-              autoComplete="off"
-            />
-            <span className="text-neutral-500 text-sm">
-              Login username for sites that require authentication.
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="password">Password (--password)</Label>
-            <Input
-              id="password"
-              type="password"
-              value={settings.password}
-              onChange={e => handleChange('password', e.target.value)}
-              placeholder="Enter password"
-              autoComplete="off"
-            />
-            <span className="text-neutral-500 text-sm">
-              Login password. Prefer cookies when possible for better security.
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-1">
             <Label htmlFor="cookiesFile">Cookies File (--cookies)</Label>
             <Input
               id="cookiesFile"
@@ -240,6 +211,11 @@ export default function Settings({ tabId }: { tabId: string }) {
               Path to a Netscape-format cookies file exported from your browser.
             </span>
           </div>
+
+          <span className="text-neutral-500 text-sm">
+            To add username/password logins for specific sites, use the login manager (key icon in
+            the top bar).
+          </span>
         </section>
 
         <section className="flex flex-col gap-4">

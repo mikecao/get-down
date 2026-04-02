@@ -21,8 +21,6 @@ export interface Settings {
   restrictFilenames: boolean;
   cookiesFromBrowser: string;
   cookiesFile: string;
-  username: string;
-  password: string;
   customArgs: string;
 }
 
@@ -37,8 +35,6 @@ export const defaultSettings: Settings = {
   restrictFilenames: false,
   cookiesFromBrowser: '',
   cookiesFile: '',
-  username: '',
-  password: '',
   customArgs: '',
 };
 
@@ -213,8 +209,6 @@ export const useTabsStore = create<TabsState>()(
           ...tab,
           // Only persist completed/errored downloads
           downloads: tab.downloads.filter(d => d.status === COMPLETE || d.status === ERROR),
-          // Don't persist passwords
-          settings: { ...tab.settings, password: '' },
         })),
         activeTabId: state.activeTabId,
       }),

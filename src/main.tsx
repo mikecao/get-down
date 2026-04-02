@@ -5,14 +5,16 @@ import '@fontsource/jetbrains-mono';
 import App from './App';
 import './global.css';
 import { initAppInfo } from './lib/appInfo';
+import { useCredentialsStore } from './lib/credentialsStore';
 import { getDb } from './lib/db';
 import { loadSavePath } from './lib/store';
 
 async function init() {
   initAppInfo();
-  // Initialize SQLite connection and load save path before rendering
+  // Initialize SQLite connection and load data before rendering
   await getDb();
   await loadSavePath();
+  await useCredentialsStore.getState().loadCredentials();
 
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>

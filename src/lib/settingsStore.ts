@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import type { Credential } from './credentialsStore';
 import type { Settings } from './store';
 
 interface SettingsUIState {
@@ -15,7 +16,12 @@ export const useSettingsStore = create<SettingsUIState>()(set => ({
   },
 }));
 
-export function buildYtDlpArgs(settings: Settings, url: string, outputPath: string): string[] {
+export function buildYtDlpArgs(
+  settings: Settings,
+  url: string,
+  outputPath: string,
+  credential?: Credential,
+): string[] {
   const args: string[] = [
     url,
     '-o',
@@ -64,12 +70,9 @@ export function buildYtDlpArgs(settings: Settings, url: string, outputPath: stri
     args.push('--cookies', settings.cookiesFile);
   }
 
-  if (settings.username) {
-    args.push('--username', settings.username);
-  }
-
-  if (settings.password) {
-    args.push('--password', settings.password);
+  if (credential) {
+    args.push('--username', credential.username);
+    args.push('--password', credential.password);
   }
 
   if (settings.customArgs) {

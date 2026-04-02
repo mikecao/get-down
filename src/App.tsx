@@ -2,6 +2,7 @@ import { Moon, Sun } from 'lucide-react';
 import { useState } from 'react';
 import { AboutDialog } from '@/components/AboutDialog';
 import { ColorPicker } from '@/components/ColorPicker';
+import { CredentialManager } from '@/components/CredentialManager';
 import DropZone from '@/components/DropZone';
 import TabBar from '@/components/TabBar';
 import TabPanel from '@/components/TabPanel';
@@ -45,6 +46,7 @@ function App() {
           {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
         </Button>
         <ColorPicker colorName={colorName} onColorChange={setColorName} />
+        <CredentialManager />
         <AboutDialog />
       </div>
       <Tabs value={activeTabId} className="flex min-h-0 flex-1 flex-col">

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { CANCELLED, COMPLETE, DOWNLOADING, ERROR, LOADING } from '@/lib/constants';
+import { useCredentialsStore } from '@/lib/credentialsStore';
 import { buildYtDlpArgs } from '@/lib/settingsStore';
 import type { Settings } from '@/lib/store';
 import { cn } from '@/lib/utils';
@@ -77,9 +78,12 @@ export default function Download({
     setOutput(prev => [...prev, { id: outputId.current++, text: line }]);
   }
 
+  const findCredential = useCredentialsStore(state => state.findCredential);
+
   useEffect(() => {
     async function spawn() {
-      const args = buildYtDlpArgs(settings, url, path);
+      const credential = findCredential(url);
+      const args = buildYtDlpArgs(settings, url, path, credential);
       const command = Command.sidecar('binaries/yt-dlp', args);
 
       command.on('close', data => {
