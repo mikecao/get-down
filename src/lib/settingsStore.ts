@@ -60,6 +60,18 @@ export function buildYtDlpArgs(settings: Settings, url: string, outputPath: stri
     args.push('--cookies-from-browser', settings.cookiesFromBrowser);
   }
 
+  if (settings.cookiesFile) {
+    args.push('--cookies', settings.cookiesFile);
+  }
+
+  if (settings.username) {
+    args.push('--username', settings.username);
+  }
+
+  if (settings.password) {
+    args.push('--password', settings.password);
+  }
+
   if (settings.customArgs) {
     const customArgsList = settings.customArgs.split(/\s+/).filter(Boolean);
     args.push(...customArgsList);

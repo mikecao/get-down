@@ -197,6 +197,52 @@ export default function Settings({ tabId }: { tabId: string }) {
         </section>
 
         <section className="flex flex-col gap-4">
+          <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Authentication</h3>
+
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="username">Username (--username)</Label>
+            <Input
+              id="username"
+              value={settings.username}
+              onChange={e => handleChange('username', e.target.value)}
+              placeholder="Enter username"
+              autoComplete="off"
+            />
+            <span className="text-neutral-500 text-sm">
+              Login username for sites that require authentication.
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="password">Password (--password)</Label>
+            <Input
+              id="password"
+              type="password"
+              value={settings.password}
+              onChange={e => handleChange('password', e.target.value)}
+              placeholder="Enter password"
+              autoComplete="off"
+            />
+            <span className="text-neutral-500 text-sm">
+              Login password. Prefer cookies when possible for better security.
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="cookiesFile">Cookies File (--cookies)</Label>
+            <Input
+              id="cookiesFile"
+              value={settings.cookiesFile}
+              onChange={e => handleChange('cookiesFile', e.target.value)}
+              placeholder="Path to cookies.txt file"
+            />
+            <span className="text-neutral-500 text-sm">
+              Path to a Netscape-format cookies file exported from your browser.
+            </span>
+          </div>
+        </section>
+
+        <section className="flex flex-col gap-4">
           <h3 className="font-bold text-neutral-600 dark:text-neutral-400">Advanced</h3>
 
           <div className="flex flex-col gap-1">
