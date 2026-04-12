@@ -8,17 +8,14 @@ import { initAppInfo } from './lib/appInfo';
 import { getDb } from './lib/db';
 import { loadSavePath } from './lib/store';
 
-async function init() {
-  initAppInfo();
-  // Initialize SQLite connection and load save path before rendering
-  await getDb();
-  await loadSavePath();
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+);
 
-  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
+async function init() {
+  await Promise.allSettled([initAppInfo(), getDb().then(() => loadSavePath())]);
 }
 
-init();
+void init();

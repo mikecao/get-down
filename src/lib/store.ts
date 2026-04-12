@@ -80,6 +80,14 @@ export async function loadSavePath(): Promise<string> {
 
 const getDefaultSavePath = () => cachedSavePath;
 
+function createInitialTabsState() {
+  const initialTab = createTab('Tab 1', getDefaultSavePath());
+  return {
+    tabs: [initialTab],
+    activeTabId: initialTab.id,
+  };
+}
+
 const sqliteStorage = createJSONStorage<TabsState>(() => ({
   getItem: async (name: string): Promise<string | null> => {
     return getSetting(name);
@@ -97,8 +105,7 @@ const sqliteStorage = createJSONStorage<TabsState>(() => ({
 export const useTabsStore = create<TabsState>()(
   persist(
     (set, get) => ({
-      tabs: [createTab('Tab 1', getDefaultSavePath())],
-      activeTabId: '',
+      ...createInitialTabsState(),
 
       addTab: () => {
         const { tabs } = get();

@@ -16,11 +16,12 @@ function App() {
   const { tabs, activeTabId, addTab, closeTab, selectTab, renameTab, addDownload } = useTabsStore();
   const { theme, toggleTheme } = useTheme();
   const { colorName, setColorName } = usePrimaryColor();
+  const resolvedActiveTabId = activeTabId || tabs[0]?.id || '';
 
   const handleDrop = (value: string) => {
     setShowDrop(false);
-    if (activeTabId) {
-      addDownload(activeTabId, value);
+    if (resolvedActiveTabId) {
+      addDownload(resolvedActiveTabId, value);
     }
   };
 
@@ -47,7 +48,7 @@ function App() {
         <ColorPicker colorName={colorName} onColorChange={setColorName} />
         <AboutDialog />
       </div>
-      <Tabs value={activeTabId} className="flex min-h-0 flex-1 flex-col">
+      <Tabs value={resolvedActiveTabId} className="flex min-h-0 flex-1 flex-col">
         <TabBar
           tabs={tabs}
           onTabSelect={selectTab}
