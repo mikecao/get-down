@@ -44,17 +44,20 @@ function TabPanel({ tabId }: TabPanelProps) {
   };
 
   return (
-    <TabsContent value={tabId} className="relative flex flex-1 flex-col gap-4">
+    <TabsContent
+      value={tabId}
+      className="relative flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
+    >
       {showSettings ? (
         <div className="flex min-h-0 flex-1 flex-col overflow-auto">
           <Settings tabId={tabId} />
         </div>
       ) : (
         <>
-          <div className="flex gap-2.5">
+          <div className="flex shrink-0 gap-2.5">
             <Search onSubmit={handleSubmit} />
           </div>
-          <div className="flex min-h-0 flex-1 flex-col overflow-auto">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <Downloads
               downloads={downloads}
               settings={settings}
@@ -65,7 +68,7 @@ function TabPanel({ tabId }: TabPanelProps) {
           </div>
         </>
       )}
-      <div className="flex items-center justify-between gap-2.5">
+      <div className="flex shrink-0 items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
           <Button
             variant="ghost"
