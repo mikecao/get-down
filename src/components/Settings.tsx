@@ -15,6 +15,7 @@ import { useSettingsStore } from '@/lib/settingsStore';
 import { type Settings as SettingsType, useTabsStore } from '@/lib/store';
 
 const audioFormats = ['mp3', 'aac', 'flac', 'wav', 'opus', 'm4a', 'vorbis'];
+const noBrowserValue = '__none__';
 const browsers = ['', 'chrome', 'firefox', 'edge', 'safari', 'opera', 'brave'];
 
 export default function Settings({ tabId }: { tabId: string }) {
@@ -176,15 +177,17 @@ export default function Settings({ tabId }: { tabId: string }) {
               Cookies from Browser (--cookies-from-browser)
             </Label>
             <Select
-              value={settings.cookiesFromBrowser}
-              onValueChange={value => value && handleChange('cookiesFromBrowser', value)}
+              value={settings.cookiesFromBrowser || noBrowserValue}
+              onValueChange={value =>
+                handleChange('cookiesFromBrowser', value === noBrowserValue ? '' : value)
+              }
             >
               <SelectTrigger id="cookiesFromBrowser">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {browsers.map(browser => (
-                  <SelectItem key={browser || 'none'} value={browser || 'none'}>
+                  <SelectItem key={browser || noBrowserValue} value={browser || noBrowserValue}>
                     {browser ? browser.charAt(0).toUpperCase() + browser.slice(1) : 'None'}
                   </SelectItem>
                 ))}

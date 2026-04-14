@@ -209,6 +209,7 @@ export const useTabsStore = create<TabsState>()(
     {
       name: TABS_STORAGE_KEY,
       storage: sqliteStorage,
+      skipHydration: true,
       partialize: state => ({
         tabs: state.tabs.map(tab => ({
           ...tab,
