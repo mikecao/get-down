@@ -4,7 +4,9 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-const Select = BaseSelect.Root;
+const Select = (props: React.ComponentPropsWithoutRef<typeof BaseSelect.Root>) => (
+  <BaseSelect.Root modal={false} {...props} />
+);
 
 const SelectGroup = BaseSelect.Group;
 
@@ -40,11 +42,11 @@ interface SelectContentProps extends React.ComponentPropsWithoutRef<typeof BaseS
 const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
   ({ className, children, ...props }, ref) => (
     <BaseSelect.Portal>
-      <BaseSelect.Positioner sideOffset={4} positionMethod="fixed">
+      <BaseSelect.Positioner className="z-50" sideOffset={4} alignItemWithTrigger={false}>
         <BaseSelect.Popup
           ref={ref}
           className={cn(
-            'relative z-50 max-h-96 min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
+            'z-50 max-h-96 min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
             'data-[ending-style]:fade-out-0 data-[starting-style]:fade-in-0 data-[ending-style]:zoom-out-95 data-[starting-style]:zoom-in-95',
             className,
           )}
