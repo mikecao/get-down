@@ -36,7 +36,7 @@ function App() {
   return (
     <div className="relative flex min-h-0 flex-1 flex-col" onDragEnter={handleDragEnter}>
       <DropZone show={showDrop} onDrop={handleDrop} onLeave={handleDragLeave} />
-      <div className="absolute top-0 right-0 flex gap-1">
+      <div className="absolute top-0 right-0 z-20 flex gap-1">
         <Button
           variant="ghost"
           size="icon"

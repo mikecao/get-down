@@ -23,22 +23,22 @@ export default function Downloads({
         <Table className="table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead className="sticky top-0 z-10">
+              <TableHead className="sticky top-0 z-10 bg-background">
                 Name
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[100px]">
+              <TableHead className="sticky top-0 z-10 bg-background w-[100px]">
                 Status
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[140px]">
+              <TableHead className="sticky top-0 z-10 bg-background w-[140px]">
                 Progress
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[100px]">
+              <TableHead className="sticky top-0 z-10 bg-background w-[100px]">
                 Speed
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[80px]">
+              <TableHead className="sticky top-0 z-10 bg-background w-[80px]">
                 Size
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[80px]" />
+              <TableHead className="sticky top-0 z-10 bg-background w-[80px]" />
             </TableRow>
           </TableHeader>
           <TableBody>
