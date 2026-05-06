@@ -91,23 +91,30 @@ function TabBar({ tabs, onTabSelect, onTabClose, onTabAdd, onTabRename }: TabBar
   return (
     <div className="mb-2.5 flex min-w-0 items-center gap-2 pr-28">
       <div className="-mb-1 min-w-0 flex-1 overflow-x-auto overflow-y-hidden pb-1">
-        <TabsList className="w-max min-w-max">
-          {tabs.map(tab => (
-            <TabsTrigger
-              key={tab.id}
-              value={tab.id}
-              onClick={() => onTabSelect(tab.id)}
-              className="group/tab flex shrink-0 items-center justify-between gap-1.5"
-            >
-              <TabName name={tab.name} onRename={name => onTabRename(tab.id, name)} />
-              {tabs.length > 1 && <CloseButton onClick={() => onTabClose(tab.id)} />}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+        <div className="flex w-max min-w-max items-center gap-2">
+          <TabsList>
+            {tabs.map(tab => (
+              <TabsTrigger
+                key={tab.id}
+                value={tab.id}
+                onClick={() => onTabSelect(tab.id)}
+                className="group/tab flex shrink-0 items-center justify-between gap-1.5"
+              >
+                <TabName name={tab.name} onRename={name => onTabRename(tab.id, name)} />
+                {tabs.length > 1 && <CloseButton onClick={() => onTabClose(tab.id)} />}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onTabAdd}
+            className="h-7 w-7 shrink-0 text-lg"
+          >
+            +
+          </Button>
+        </div>
       </div>
-      <Button variant="ghost" size="icon" onClick={onTabAdd} className="h-7 w-7 shrink-0 text-lg">
-        +
-      </Button>
     </div>
   );
 }
