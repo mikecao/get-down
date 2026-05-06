@@ -1,11 +1,9 @@
-import { Settings as SettingsIcon } from 'lucide-react';
 import Downloads from '@/components/Downloads';
 import SavePath from '@/components/SavePath';
 import Search from '@/components/Search';
 import Settings from '@/components/Settings';
 import { Button } from '@/components/ui/button';
-import { TabsContent } from '@/components/ui/tabs';
-import { useSettingsStore } from '@/lib/settingsStore';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTabsStore } from '@/lib/store';
 
 interface TabPanelProps {
@@ -15,13 +13,11 @@ interface TabPanelProps {
 function TabPanel({ tabId }: TabPanelProps) {
   const { tabs, addDownload, updateDownloadStatus, removeDownload, clearCompleted, setSavePath } =
     useTabsStore();
-  const { settingsOpenForTabId, toggleSettings } = useSettingsStore();
 
   const tab = tabs.find(t => t.id === tabId);
   if (!tab) return null;
 
   const { downloads, savePath, settings } = tab;
-  const showSettings = settingsOpenForTabId === tabId;
 
   const handleSubmit = (url: string) => {
     addDownload(tabId, url);
@@ -44,48 +40,42 @@ function TabPanel({ tabId }: TabPanelProps) {
   };
 
   return (
-    <TabsContent
-      value={tabId}
-      className="relative flex min-h-0 flex-1 flex-col gap-4"
-    >
-      <div className="flex shrink-0 gap-2.5">
-        <Search onSubmit={handleSubmit} />
-      </div>
-      <div className="relative min-h-0 flex-1 overflow-hidden">
-        <div className="flex h-full flex-col overflow-hidden">
-          <Downloads
-            downloads={downloads}
-            settings={settings}
-            savePath={savePath}
-            onChange={handleChange}
-            onRemove={handleRemove}
-          />
-        </div>
-        <div
-          className={`absolute inset-0 z-10 border-t-2 border-primary bg-background transition-transform duration-300 ease-in-out ${
-            showSettings ? 'translate-y-0' : 'translate-y-full'
-          }`}
-        >
-          <div className="flex h-full flex-col overflow-auto">
+    <TabsContent value={tabId} className="relative flex min-h-0 flex-1 flex-col gap-4">
+      <Tabs defaultValue="downloads" className="flex min-h-0 flex-1 flex-col">
+        <TabsList className="h-8 shrink-0 gap-8">
+          <TabsTrigger value="downloads" className="min-w-0 px-0">
+            Downloads
+          </TabsTrigger>
+          <TabsTrigger value="settings" className="min-w-0 px-0">
+            Settings
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="downloads" className="mt-0 flex min-h-0 flex-1 flex-col gap-4">
+          <div className="flex shrink-0 gap-2.5">
+            <Search onSubmit={handleSubmit} />
+          </div>
+          <div className="min-h-0 flex-1 overflow-hidden">
+            <Downloads
+              downloads={downloads}
+              settings={settings}
+              savePath={savePath}
+              onChange={handleChange}
+              onRemove={handleRemove}
+            />
+          </div>
+          <div className="flex h-14 shrink-0 items-center justify-between gap-2.5 bg-background">
+            <SavePath path={savePath} onChange={handleSavePathChange} />
+            <Button onClick={handleClear}>Clear completed</Button>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="settings" className="mt-0 min-h-0 flex-1 overflow-hidden">
+          <div className="flex h-full flex-col overflow-hidden">
             <Settings tabId={tabId} />
           </div>
-        </div>
-      </div>
-      <div className={`relative z-20 bg-background flex h-14 shrink-0 items-center justify-between gap-2.5 transition-colors duration-300 border-t-2 ${showSettings ? 'border-transparent' : 'border-primary'}`}>
-        <div className="flex items-center gap-2.5">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => toggleSettings(tabId)}
-            className={showSettings ? 'opacity-100' : ''}
-            title={showSettings ? 'Close settings' : 'Open settings'}
-          >
-            <SettingsIcon size={16} />
-          </Button>
-          <SavePath path={savePath} onChange={handleSavePathChange} />
-        </div>
-        <Button onClick={handleClear}>Clear completed</Button>
-      </div>
+        </TabsContent>
+      </Tabs>
     </TabsContent>
   );
 }
