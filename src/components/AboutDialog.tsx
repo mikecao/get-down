@@ -19,7 +19,7 @@ export function AboutDialog() {
           <Info size={16} />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="rounded-none">
         <div className="flex items-center justify-between">
           <DialogTitle>About</DialogTitle>
           <DialogClose>
@@ -30,12 +30,12 @@ export function AboutDialog() {
         </div>
         <div className="mt-4 flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <span className="font-semibold">Get Down</span>
-            <span className="text-muted-foreground text-sm">Version {appVersion || '...'}</span>
+            <span className="font-semibold text-sm">Get Down</span>
+            <span className="text-muted-foreground text-xs">Version {appVersion || '...'}</span>
           </div>
           <div className="flex flex-col gap-1">
-            <span className="font-semibold">yt-dlp</span>
-            <span className="text-muted-foreground text-sm">Version {ytDlpVersion || '...'}</span>
+            <span className="font-semibold text-sm">yt-dlp</span>
+            <span className="text-muted-foreground text-xs">Version {ytDlpVersion || '...'}</span>
           </div>
         </div>
       </DialogContent>
