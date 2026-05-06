@@ -144,7 +144,7 @@
 html,
 body {
   font-size: 14px;
-  font-family: var(--font-family-sans);
+  font-family: var(--font-family-mono);
   padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
