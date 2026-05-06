@@ -128,20 +128,12 @@ export default function Download({
     onRemove();
   };
 
-  const getStatusClasses = () => {
-    const base = 'font-bold';
-    if (status === ERROR) return cn(base, 'text-error dark:text-red-400');
-    if (status === COMPLETE) return cn(base, 'text-success dark:text-emerald-400');
-    if (status === DOWNLOADING) return cn(base, 'text-info dark:text-blue-400');
-    return base;
-  };
-
   return (
     <>
       <TableRow>
         <TableCell className="truncate py-2">{name}</TableCell>
         <TableCell className="py-2">
-          <span className={getStatusClasses()}>{status}</span>
+          <span>{status}</span>
         </TableCell>
         <TableCell className="py-2">
           {+progress > 0 ? (
@@ -176,7 +168,7 @@ export default function Download({
               size="icon"
               onClick={handleRemove}
               title={status === LOADING || status === DOWNLOADING ? 'Cancel download' : 'Remove'}
-              className="h-6 w-6 text-neutral-500 hover:text-error dark:text-neutral-400 dark:hover:text-error"
+              className="h-6 w-6 text-neutral-500 hover:text-primary dark:text-neutral-400 dark:hover:text-primary"
             >
               <X size={16} />
             </Button>

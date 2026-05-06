@@ -21,7 +21,7 @@ export default function Downloads({
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
         <Table className="table-fixed">
-          <TableHeader className="[&_th]:shadow-[inset_0_-1px_0_0_var(--border)] [&_tr]:border-b-0">
+          <TableHeader className="[&_th:first-child]:pl-0 [&_th:last-child]:pr-0 [&_th]:px-2 [&_th]:shadow-[inset_0_-1px_0_0_var(--border)] [&_tr]:border-b-0">
             <TableRow>
               <TableHead className="sticky top-0 z-10 bg-background">Name</TableHead>
               <TableHead className="sticky top-0 z-10 w-[100px] bg-background">Status</TableHead>
@@ -31,7 +31,7 @@ export default function Downloads({
               <TableHead className="sticky top-0 z-10 w-[80px] bg-background" />
             </TableRow>
           </TableHeader>
-          <TableBody className="[&_td]:border-b">
+          <TableBody className="[&_td:first-child]:pl-0 [&_td:last-child]:pr-0 [&_td]:border-b [&_td]:px-2">
             {downloads.map(({ id, url, status }) => {
               return (
                 <Download
