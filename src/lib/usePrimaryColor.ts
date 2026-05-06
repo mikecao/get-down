@@ -40,7 +40,7 @@ function applyColor(colorName: PrimaryColorName) {
 }
 
 export function usePrimaryColor() {
-  const [colorName, setColorName] = useState<PrimaryColorName>('default');
+  const [colorName, setColorName] = useState<PrimaryColorName>('lime');
   const [loaded, setLoaded] = useState(false);
 
   // Load saved color from SQLite on mount
@@ -49,6 +49,8 @@ export function usePrimaryColor() {
       const found = COLOR_PALETTE.find(c => c.name === stored);
       if (found) {
         setColorName(found.name);
+      } else {
+        setColorName('lime');
       }
       setLoaded(true);
     });

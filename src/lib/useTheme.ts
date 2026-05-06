@@ -16,10 +16,7 @@ function applyTheme(theme: Theme) {
 }
 
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Use system preference as initial value before SQLite loads
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  });
+  const [theme, setTheme] = useState<Theme>('dark');
   const [loaded, setLoaded] = useState(false);
 
   // Load saved theme from SQLite on mount
@@ -27,6 +24,8 @@ export function useTheme() {
     getSetting(THEME_KEY).then(stored => {
       if (stored === 'dark' || stored === 'light') {
         setTheme(stored);
+      } else {
+        setTheme('dark');
       }
       setLoaded(true);
     });
