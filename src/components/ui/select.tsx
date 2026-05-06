@@ -40,7 +40,7 @@ interface SelectContentProps extends React.ComponentPropsWithoutRef<typeof BaseS
 const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
   ({ className, children, ...props }, ref) => (
     <BaseSelect.Portal>
-      <BaseSelect.Positioner sideOffset={4}>
+      <BaseSelect.Positioner sideOffset={4} positionMethod="fixed">
         <BaseSelect.Popup
           ref={ref}
           className={cn(
@@ -82,7 +82,7 @@ const SelectItem = React.forwardRef<HTMLDivElement, SelectItemProps>(
     <BaseSelect.Item
       ref={ref}
       className={cn(
-        'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pr-8 pl-2 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         className,
       )}
       {...props}
