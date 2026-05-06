@@ -46,22 +46,24 @@ function TabPanel({ tabId }: TabPanelProps) {
   return (
     <TabsContent
       value={tabId}
-      className="relative flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
+      className="relative flex min-h-0 flex-1 flex-col gap-4"
     >
       <div className="flex shrink-0 gap-2.5">
         <Search onSubmit={handleSubmit} />
       </div>
-      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
-        <Downloads
-          downloads={downloads}
-          settings={settings}
-          savePath={savePath}
-          onChange={handleChange}
-          onRemove={handleRemove}
-        />
+      <div className="relative min-h-0 flex-1 overflow-hidden">
+        <div className="flex h-full flex-col overflow-hidden">
+          <Downloads
+            downloads={downloads}
+            settings={settings}
+            savePath={savePath}
+            onChange={handleChange}
+            onRemove={handleRemove}
+          />
+        </div>
         <div
           className={`absolute inset-0 z-10 border-t-2 border-primary bg-background transition-transform duration-300 ease-in-out ${
-            showSettings ? 'translate-y-0' : 'translate-y-[calc(100%-6px)]'
+            showSettings ? 'translate-y-0' : 'translate-y-full'
           }`}
         >
           <div className="flex h-full flex-col overflow-auto">
@@ -69,7 +71,7 @@ function TabPanel({ tabId }: TabPanelProps) {
           </div>
         </div>
       </div>
-      <div className="flex shrink-0 items-center justify-between gap-2.5">
+      <div className={`relative z-20 bg-background flex h-14 shrink-0 items-center justify-between gap-2.5 transition-colors duration-300 border-t-2 ${showSettings ? 'border-transparent' : 'border-primary'}`}>
         <div className="flex items-center gap-2.5">
           <Button
             variant="ghost"

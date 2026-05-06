@@ -209,6 +209,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: oklch(0.7 0 0);
+  border-radius: 0;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -217,6 +218,7 @@ body {
 
 .dark ::-webkit-scrollbar-thumb {
   background: oklch(0.4 0 0);
+  border-radius: 0;
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
