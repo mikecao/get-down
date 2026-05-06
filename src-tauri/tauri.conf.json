@@ -34,7 +34,7 @@
     "beforeBuildCommand": "pnpm vite-build",
     "beforeDevCommand": "pnpm vite-dev",
     "frontendDist": "../dist",
-    "devUrl": "http://localhost:7000"
+    "devUrl": "http://localhost:5173"
   },
   "bundle": {
     "active": true,

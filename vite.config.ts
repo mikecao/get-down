@@ -5,7 +5,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   clearScreen: false,
   server: {
-    port: 7000,
+    port: 5173,
     watch: {
       ignored: ['**/src-tauri/**'],
     },
