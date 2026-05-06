@@ -21,7 +21,7 @@ const SelectTrigger = React.forwardRef<HTMLButtonElement, SelectTriggerProps>(
     <BaseSelect.Trigger
       ref={ref}
       className={cn(
-        'flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
+        'flex h-9 w-full max-w-[240px] items-center justify-between whitespace-nowrap border-b border-input bg-transparent px-0 py-2 text-sm transition-colors focus:outline-none focus-visible:border-primary disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
         className,
       )}
       {...props}
@@ -42,11 +42,11 @@ interface SelectContentProps extends React.ComponentPropsWithoutRef<typeof BaseS
 const SelectContent = React.forwardRef<HTMLDivElement, SelectContentProps>(
   ({ className, children, ...props }, ref) => (
     <BaseSelect.Portal>
-      <BaseSelect.Positioner className="z-50" sideOffset={4} alignItemWithTrigger={false}>
+      <BaseSelect.Positioner className="z-50" sideOffset={4} alignItemWithTrigger={false} align="start">
         <BaseSelect.Popup
           ref={ref}
           className={cn(
-            'z-50 max-h-96 min-w-[8rem] overflow-y-auto overflow-x-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md',
+            'z-50 max-h-96 max-w-[240px] min-w-[8rem] overflow-y-auto overflow-x-hidden border bg-popover p-1 text-popover-foreground shadow-md',
             'data-[ending-style]:fade-out-0 data-[starting-style]:fade-in-0 data-[ending-style]:zoom-out-95 data-[starting-style]:zoom-in-95',
             className,
           )}
