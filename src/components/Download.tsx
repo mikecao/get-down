@@ -141,12 +141,12 @@ export default function Download({
 
   return (
     <>
-      <TableRow className="bg-white dark:bg-neutral-800">
-        <TableCell className="truncate p-4">{name}</TableCell>
-        <TableCell className="p-4">
+      <TableRow>
+        <TableCell className="truncate py-2">{name}</TableCell>
+        <TableCell className="py-2">
           <span className={getStatusClasses()}>{status}</span>
         </TableCell>
-        <TableCell className="p-4">
+        <TableCell className="py-2">
           {+progress > 0 ? (
             <div className="flex items-center gap-2.5">
               <Progress value={Number(progress)} className="w-[50px]" />
@@ -156,9 +156,9 @@ export default function Download({
             '--'
           )}
         </TableCell>
-        <TableCell className="p-4">{speed}</TableCell>
-        <TableCell className="p-4">{size}</TableCell>
-        <TableCell className="p-4">
+        <TableCell className="py-2">{speed}</TableCell>
+        <TableCell className="py-2">{size}</TableCell>
+        <TableCell className="py-2">
           <div className="flex justify-end gap-1">
             {output.length > 0 && (
               <Button
@@ -168,8 +168,7 @@ export default function Download({
                 title="Toggle output"
                 className={cn(
                   'h-6 w-6 text-neutral-500 dark:text-neutral-400',
-                  expanded &&
-                    'bg-neutral-200 text-neutral-700 dark:bg-neutral-600 dark:text-neutral-200',
+                  expanded && 'text-neutral-700 dark:text-neutral-200',
                 )}
               >
                 <Terminal size={16} />

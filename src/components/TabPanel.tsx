@@ -61,7 +61,7 @@ function TabPanel({ tabId }: TabPanelProps) {
         />
         <div
           className={`absolute inset-0 z-10 border-t-2 border-primary bg-background transition-transform duration-300 ease-in-out ${
-            showSettings ? 'translate-y-0' : 'translate-y-full'
+            showSettings ? 'translate-y-0' : 'translate-y-[calc(100%-6px)]'
           }`}
         >
           <div className="flex h-full flex-col overflow-auto">

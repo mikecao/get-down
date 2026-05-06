@@ -18,27 +18,27 @@ export default function Downloads({
   onRemove,
 }: DownloadsProps) {
   return (
-    <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded border border-border bg-surface dark:border-neutral-600 dark:bg-neutral-800">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
         <Table className="table-fixed">
           <TableHeader>
-            <TableRow className="bg-neutral-100 hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-900">
-              <TableHead className="sticky top-0 z-10 bg-neutral-100 px-4 dark:bg-neutral-900">
+            <TableRow>
+              <TableHead className="sticky top-0 z-10">
                 Name
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[100px] bg-neutral-100 px-4 dark:bg-neutral-900">
+              <TableHead className="sticky top-0 z-10 w-[100px]">
                 Status
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[140px] bg-neutral-100 px-4 dark:bg-neutral-900">
+              <TableHead className="sticky top-0 z-10 w-[140px]">
                 Progress
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[100px] bg-neutral-100 px-4 dark:bg-neutral-900">
+              <TableHead className="sticky top-0 z-10 w-[100px]">
                 Speed
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[80px] bg-neutral-100 px-4 dark:bg-neutral-900">
+              <TableHead className="sticky top-0 z-10 w-[80px]">
                 Size
               </TableHead>
-              <TableHead className="sticky top-0 z-10 w-[80px] bg-neutral-100 px-4 dark:bg-neutral-900" />
+              <TableHead className="sticky top-0 z-10 w-[80px]" />
             </TableRow>
           </TableHeader>
           <TableBody>
