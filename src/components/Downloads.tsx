@@ -21,27 +21,17 @@ export default function Downloads({
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       <div className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
         <Table className="table-fixed">
-          <TableHeader>
+          <TableHeader className="[&_th]:shadow-[inset_0_-1px_0_0_var(--border)] [&_tr]:border-b-0">
             <TableRow>
-              <TableHead className="sticky top-0 z-10 bg-background">
-                Name
-              </TableHead>
-              <TableHead className="sticky top-0 z-10 bg-background w-[100px]">
-                Status
-              </TableHead>
-              <TableHead className="sticky top-0 z-10 bg-background w-[140px]">
-                Progress
-              </TableHead>
-              <TableHead className="sticky top-0 z-10 bg-background w-[100px]">
-                Speed
-              </TableHead>
-              <TableHead className="sticky top-0 z-10 bg-background w-[80px]">
-                Size
-              </TableHead>
-              <TableHead className="sticky top-0 z-10 bg-background w-[80px]" />
+              <TableHead className="sticky top-0 z-10 bg-background">Name</TableHead>
+              <TableHead className="sticky top-0 z-10 w-[100px] bg-background">Status</TableHead>
+              <TableHead className="sticky top-0 z-10 w-[140px] bg-background">Progress</TableHead>
+              <TableHead className="sticky top-0 z-10 w-[100px] bg-background">Speed</TableHead>
+              <TableHead className="sticky top-0 z-10 w-[80px] bg-background">Size</TableHead>
+              <TableHead className="sticky top-0 z-10 w-[80px] bg-background" />
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody className="[&_td]:border-b">
             {downloads.map(({ id, url, status }) => {
               return (
                 <Download

@@ -27,7 +27,7 @@ export default function Settings({ tabId }: { tabId: string }) {
 
   return (
     <div className="relative min-h-0 flex-1">
-      <div className="absolute inset-0 flex flex-col gap-6 overflow-y-auto p-4">
+      <div className="absolute inset-0 flex flex-col gap-6 overflow-y-auto py-4">
         <h2 className="font-bold text-lg">yt-dlp Settings</h2>
 
         <section className="flex flex-col gap-4">

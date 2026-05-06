@@ -40,8 +40,11 @@ function TabPanel({ tabId }: TabPanelProps) {
   };
 
   return (
-    <TabsContent value={tabId} className="relative flex min-h-0 flex-1 flex-col gap-4">
-      <Tabs defaultValue="downloads" className="flex min-h-0 flex-1 flex-col">
+    <TabsContent
+      value={tabId}
+      className="relative flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
+    >
+      <Tabs defaultValue="downloads" className="flex min-h-0 flex-1 flex-col overflow-hidden">
         <TabsList className="h-8 shrink-0 gap-8">
           <TabsTrigger value="downloads" className="min-w-0 px-0">
             Downloads
@@ -51,11 +54,14 @@ function TabPanel({ tabId }: TabPanelProps) {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="downloads" className="mt-0 flex min-h-0 flex-1 flex-col gap-4">
-          <div className="flex shrink-0 gap-2.5">
+        <TabsContent
+          value="downloads"
+          className="mt-0 flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
+        >
+          <div className="flex shrink-0 gap-2.5 py-2">
             <Search onSubmit={handleSubmit} />
           </div>
-          <div className="min-h-0 flex-1 overflow-hidden">
+          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
             <Downloads
               downloads={downloads}
               settings={settings}
