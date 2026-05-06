@@ -48,26 +48,27 @@ function TabPanel({ tabId }: TabPanelProps) {
       value={tabId}
       className="relative flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
     >
-      {showSettings ? (
-        <div className="flex min-h-0 flex-1 flex-col overflow-auto">
-          <Settings tabId={tabId} />
+      <div className="flex shrink-0 gap-2.5">
+        <Search onSubmit={handleSubmit} />
+      </div>
+      <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
+        <Downloads
+          downloads={downloads}
+          settings={settings}
+          savePath={savePath}
+          onChange={handleChange}
+          onRemove={handleRemove}
+        />
+        <div
+          className={`absolute inset-0 z-10 bg-background transition-transform duration-300 ease-in-out ${
+            showSettings ? 'translate-y-0' : 'translate-y-full'
+          }`}
+        >
+          <div className="flex h-full flex-col overflow-auto">
+            <Settings tabId={tabId} />
+          </div>
         </div>
-      ) : (
-        <>
-          <div className="flex shrink-0 gap-2.5">
-            <Search onSubmit={handleSubmit} />
-          </div>
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-            <Downloads
-              downloads={downloads}
-              settings={settings}
-              savePath={savePath}
-              onChange={handleChange}
-              onRemove={handleRemove}
-            />
-          </div>
-        </>
-      )}
+      </div>
       <div className="flex shrink-0 items-center justify-between gap-2.5">
         <div className="flex items-center gap-2.5">
           <Button
