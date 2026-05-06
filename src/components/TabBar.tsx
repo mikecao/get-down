@@ -18,7 +18,7 @@ interface TabBarProps {
 function CloseButton({ onClick }: { onClick: () => void }) {
   return (
     <span
-      className="flex h-5 w-5 cursor-pointer items-center justify-center rounded text-base text-muted-foreground hover:bg-muted-foreground/20 hover:text-foreground"
+      className="flex h-5 w-5 cursor-pointer items-center justify-center rounded text-lg text-muted-foreground opacity-0 transition-opacity group-hover/tab:opacity-100 hover:text-foreground"
       onClick={e => {
         e.stopPropagation();
         onClick();
@@ -96,7 +96,7 @@ function TabBar({ tabs, onTabSelect, onTabClose, onTabAdd, onTabRename }: TabBar
             key={tab.id}
             value={tab.id}
             onClick={() => onTabSelect(tab.id)}
-            className="flex w-full items-center justify-between gap-1.5"
+            className="group/tab flex w-full items-center justify-between gap-1.5"
           >
             <TabName name={tab.name} onRename={name => onTabRename(tab.id, name)} />
             {tabs.length > 1 && <CloseButton onClick={() => onTabClose(tab.id)} />}

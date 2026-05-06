@@ -60,7 +60,7 @@ function TabPanel({ tabId }: TabPanelProps) {
           onRemove={handleRemove}
         />
         <div
-          className={`absolute inset-0 z-10 bg-background transition-transform duration-300 ease-in-out ${
+          className={`absolute inset-0 z-10 border-t-2 border-primary bg-background transition-transform duration-300 ease-in-out ${
             showSettings ? 'translate-y-0' : 'translate-y-full'
           }`}
         >
@@ -75,7 +75,7 @@ function TabPanel({ tabId }: TabPanelProps) {
             variant="ghost"
             size="icon"
             onClick={() => toggleSettings(tabId)}
-            className={showSettings ? 'bg-neutral-200 dark:bg-neutral-700' : ''}
+            className={showSettings ? 'opacity-100' : ''}
             title={showSettings ? 'Close settings' : 'Open settings'}
           >
             <SettingsIcon size={16} />

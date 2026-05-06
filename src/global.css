@@ -203,9 +203,12 @@ body {
   background: transparent;
 }
 
+::-webkit-scrollbar-button {
+  display: none;
+}
+
 ::-webkit-scrollbar-thumb {
   background: oklch(0.7 0 0);
-  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
