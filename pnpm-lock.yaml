@@ -18,19 +18,19 @@ importers:
         specifier: ^5.2.8
         version: 5.2.8
       '@tauri-apps/api':
-        specifier: ^2.10.1
+        specifier: 2.10.1
         version: 2.10.1
       '@tauri-apps/cli':
-        specifier: ^2.10.0
+        specifier: 2.10.0
         version: 2.10.0
       '@tauri-apps/plugin-dialog':
-        specifier: ~2.6.0
+        specifier: 2.6.0
         version: 2.6.0
       '@tauri-apps/plugin-shell':
-        specifier: ~2.3.5
+        specifier: 2.3.5
         version: 2.3.5
       '@tauri-apps/plugin-sql':
-        specifier: ^2.4.0
+        specifier: 2.4.0
         version: 2.4.0
       class-variance-authority:
         specifier: ^0.7.1
