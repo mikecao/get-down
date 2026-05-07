@@ -108,10 +108,10 @@ export default function Settings({ tabId }: { tabId: string }) {
                 <Label htmlFor="concurrentFragments">Concurrent Fragments (-N)</Label>
                 <Input
                   id="concurrentFragments"
+                  inputMode="numeric"
                   value={settings.concurrentFragments}
                   onChange={e => handleChange('concurrentFragments', e.target.value)}
                   placeholder="e.g., 4"
-                  type="number"
                 />
                 <span className="text-neutral-500 text-sm">
                   Number of fragments to download in parallel.
