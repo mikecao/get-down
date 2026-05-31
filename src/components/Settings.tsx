@@ -193,7 +193,7 @@ export default function Settings({ tabId }: { tabId: string }) {
                   placeholder="e.g., --write-info-json --embed-thumbnail"
                 />
                 <span className="text-neutral-500 text-sm">
-                  Additional yt-dlp arguments (space-separated).
+                  Additional yt-dlp arguments. Quoted values are kept together.
                 </span>
               </div>
             </div>

@@ -15,6 +15,67 @@ export const useSettingsStore = create<SettingsUIState>()(set => ({
   },
 }));
 
+export function parseCustomArgs(input: string): string[] {
+  const args: string[] = [];
+  let current = '';
+  let quote: '"' | "'" | null = null;
+  let escaped = false;
+  let hasToken = false;
+
+  for (const char of input) {
+    if (escaped) {
+      current += char;
+      escaped = false;
+      hasToken = true;
+      continue;
+    }
+
+    if (char === '\\' && quote !== "'") {
+      escaped = true;
+      hasToken = true;
+      continue;
+    }
+
+    if (quote) {
+      if (char === quote) {
+        quote = null;
+      } else {
+        current += char;
+      }
+      hasToken = true;
+      continue;
+    }
+
+    if (char === '"' || char === "'") {
+      quote = char;
+      hasToken = true;
+      continue;
+    }
+
+    if (/\s/.test(char)) {
+      if (hasToken) {
+        args.push(current);
+        current = '';
+        hasToken = false;
+      }
+      continue;
+    }
+
+    current += char;
+    hasToken = true;
+  }
+
+  if (escaped) {
+    current += '\\';
+  }
+
+  if (hasToken) {
+    args.push(current);
+  }
+
+  return args;
+}
+
 export function buildYtDlpArgs(settings: Settings, url: string, outputPath: string): string[] {
   const args: string[] = [
     url,
@@ -23,7 +84,9 @@ export function buildYtDlpArgs(settings: Settings, url: string, outputPath: stri
     '--no-mtime',
     '--no-overwrites',
     '--js-runtimes',
-    'deno,nodejs',
+    'deno',
+    '--js-runtimes',
+    'node',
   ];
 
   if (settings.format) {
@@ -61,8 +124,7 @@ export function buildYtDlpArgs(settings: Settings, url: string, outputPath: stri
   }
 
   if (settings.customArgs) {
-    const customArgsList = settings.customArgs.split(/\s+/).filter(Boolean);
-    args.push(...customArgsList);
+    args.push(...parseCustomArgs(settings.customArgs));
   }
 
   return args;
