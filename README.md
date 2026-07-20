@@ -1,9 +1,7 @@
 # get-down
 
-A simple to use download tool.
-
-<img width="1184" height="1037" alt="image" src="https://github.com/user-attachments/assets/44fbcdd0-8fef-4c1b-8ea8-47db9a7307df" />
-
+<img width="1270" height="894" alt="image" src="https://github.com/user-attachments/assets/d296da45-8352-4cd4-9585-388eab1fec5d" />
+ 
 
 **[Download](https://github.com/mikecao/get-down/releases)**
 
