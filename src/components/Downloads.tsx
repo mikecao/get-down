@@ -6,7 +6,7 @@ interface DownloadsProps {
   downloads: DownloadType[];
   settings: Settings;
   savePath: string;
-  onChange: (id: string, status: string) => void;
+  onChange: (id: string, status: string, output?: string[]) => void;
   onRemove: (id: string) => void;
 }
 
@@ -32,15 +32,16 @@ export default function Downloads({
             </TableRow>
           </TableHeader>
           <TableBody className="[&_td:first-child]:pl-0 [&_td:last-child]:pr-0 [&_td]:border-b [&_td]:px-2">
-            {downloads.map(({ id, url, status }) => {
+            {downloads.map(({ id, url, status, output }) => {
               return (
                 <Download
                   key={id}
                   url={url}
                   initialStatus={status}
+                  initialOutput={output}
                   settings={settings}
                   savePath={savePath}
-                  onChange={status => onChange(id, status)}
+                  onChange={(status, output) => onChange(id, status, output)}
                   onRemove={() => onRemove(id)}
                 />
               );

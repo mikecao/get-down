@@ -14,9 +14,14 @@ import { cn } from '@/lib/utils';
 const log = debug('ui:download');
 log.log = console.log.bind(console);
 
+function toOutputLines(lines: string[] = []) {
+  return lines.map((text, id) => ({ id, text }));
+}
+
 export default function Download({
   url,
   initialStatus,
+  initialOutput,
   settings,
   savePath,
   onChange,
@@ -24,9 +29,10 @@ export default function Download({
 }: {
   url: string;
   initialStatus?: string;
+  initialOutput?: string[];
   settings: Settings;
   savePath: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, output?: string[]) => void;
   onRemove: () => void;
 }) {
   const [state, setState] = useState({
@@ -36,14 +42,24 @@ export default function Download({
     speed: '--',
     progress: initialStatus === COMPLETE ? '100' : '0',
   });
-  const [output, setOutput] = useState<{ id: number; text: string }[]>([]);
+  const [output, setOutput] = useState(() => toOutputLines(initialOutput));
   const [expanded, setExpanded] = useState(false);
   const { name, status, size, speed, progress } = state;
   const path = savePath || '.';
   const pid = useRef(0);
   const childRef = useRef<Child | null>(null);
-  const outputId = useRef(0);
+  const outputId = useRef(initialOutput?.length ?? 0);
+  const outputLinesRef = useRef<string[]>(initialOutput ? [...initialOutput] : []);
   const outputRef = useRef<HTMLDivElement | null>(null);
+
+  function appendOutput(text: string) {
+    outputLinesRef.current.push(text);
+    setOutput(prev => [...prev, { id: outputId.current++, text }]);
+  }
+
+  function persistStatus(nextStatus: string) {
+    onChange(nextStatus, outputLinesRef.current.slice());
+  }
 
   function stdout(line: string) {
     const name = line.match(/Destination:\s+(.*)/);
@@ -68,13 +84,13 @@ export default function Download({
 
     log(`stdout: ${line}`);
     if (!/^\[download\]\s+[\d.]+%/.test(line)) {
-      setOutput(prev => [...prev, { id: outputId.current++, text: line }]);
+      appendOutput(line);
     }
   }
 
   function stderr(line: string) {
     log(`stderr: ${line}`);
-    setOutput(prev => [...prev, { id: outputId.current++, text: line }]);
+    appendOutput(line);
   }
 
   useEffect(() => {
@@ -86,7 +102,7 @@ export default function Download({
         log({ close: data });
         const status = data?.code ? ERROR : COMPLETE;
         setState(state => ({ ...state, status }));
-        onChange(status);
+        persistStatus(status);
       });
 
       command.on('error', error => {
@@ -123,7 +139,7 @@ export default function Download({
       log('Cancelled manually');
       await childRef.current.kill();
       setState(state => ({ ...state, status: CANCELLED }));
-      onChange(CANCELLED);
+      persistStatus(CANCELLED);
     }
     onRemove();
   };

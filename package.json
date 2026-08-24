@@ -1,6 +1,6 @@
 {
   "name": "get-down",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@10.33.2",
@@ -8,7 +8,7 @@
     "vite-dev": "vite",
     "vite-build": "vite build",
     "preview": "vite preview",
-    "dev": "tauri dev",
+    "dev": "node scripts/tauri-dev.mjs",
     "build": "tauri build",
     "lint": "biome lint .",
     "format": "biome format --write .",

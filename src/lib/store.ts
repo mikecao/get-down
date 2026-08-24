@@ -8,6 +8,7 @@ export interface Download {
   id: string;
   url: string;
   status?: string;
+  output?: string[];
 }
 
 export interface Settings {
@@ -52,7 +53,12 @@ interface TabsState {
   selectTab: (id: string) => void;
   renameTab: (id: string, name: string) => void;
   addDownload: (tabId: string, url: string) => void;
-  updateDownloadStatus: (tabId: string, downloadId: string, status: string) => void;
+  updateDownloadStatus: (
+    tabId: string,
+    downloadId: string,
+    status: string,
+    output?: string[],
+  ) => void;
   removeDownload: (tabId: string, downloadId: string) => void;
   clearCompleted: (tabId: string) => void;
   setSavePath: (tabId: string, path: string) => void;
@@ -151,13 +157,22 @@ export const useTabsStore = create<TabsState>()(
         }));
       },
 
-      updateDownloadStatus: (tabId: string, downloadId: string, status: string) => {
+      updateDownloadStatus: (
+        tabId: string,
+        downloadId: string,
+        status: string,
+        output?: string[],
+      ) => {
         set(state => ({
           tabs: state.tabs.map(tab =>
             tab.id === tabId
               ? {
                   ...tab,
-                  downloads: tab.downloads.map(d => (d.id === downloadId ? { ...d, status } : d)),
+                  downloads: tab.downloads.map(d =>
+                    d.id === downloadId
+                      ? { ...d, status, ...(output !== undefined ? { output } : {}) }
+                      : d,
+                  ),
                 }
               : tab,
           ),
