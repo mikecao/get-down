@@ -92,6 +92,21 @@ export default function Settings({ tabId }: { tabId: string }) {
 
             <div className={sectionGroupClass}>
               <div className="flex flex-col gap-1">
+                <Label htmlFor="outputTemplate">Output Template (-o)</Label>
+                <Input
+                  id="outputTemplate"
+                  value={settings.outputTemplate}
+                  onChange={e => handleChange('outputTemplate', e.target.value)}
+                  placeholder="%(title)s.%(ext)s"
+                />
+                <span className="text-neutral-500 text-sm">
+                  Filename template, saved under this tab's folder. Leave empty for
+                  %(title)s.%(ext)s. Examples: %(uploader)s/%(title)s.%(ext)s or %(upload_date)s -
+                  %(title)s.%(ext)s
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1">
                 <Label htmlFor="rateLimit">Rate Limit (--rate-limit)</Label>
                 <Input
                   id="rateLimit"

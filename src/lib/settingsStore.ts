@@ -76,11 +76,33 @@ export function parseCustomArgs(input: string): string[] {
   return args;
 }
 
+export const DEFAULT_OUTPUT_TEMPLATE = '%(title)s.%(ext)s';
+
+function isAbsoluteOutputTemplate(template: string): boolean {
+  return (
+    /^[A-Za-z]:[\\/]/.test(template) ||
+    template.startsWith('/') ||
+    template.startsWith('\\\\') ||
+    template.startsWith('~/')
+  );
+}
+
+export function resolveOutputTemplate(outputPath: string, template?: string): string {
+  const trimmed = template?.trim() || DEFAULT_OUTPUT_TEMPLATE;
+  if (isAbsoluteOutputTemplate(trimmed)) {
+    return trimmed;
+  }
+
+  const base = (outputPath || '.').replace(/[\\/]+$/, '');
+  const relative = trimmed.replace(/^[\\/]+/, '');
+  return `${base}/${relative}`;
+}
+
 export function buildYtDlpArgs(settings: Settings, url: string, outputPath: string): string[] {
   const args: string[] = [
     url,
     '-o',
-    `${outputPath}/%(title)s.%(ext)s`,
+    resolveOutputTemplate(outputPath, settings.outputTemplate),
     '--no-mtime',
     '--no-overwrites',
     '--js-runtimes',

@@ -15,6 +15,7 @@ export interface Settings {
   format: string;
   extractAudio: boolean;
   audioFormat: string;
+  outputTemplate: string;
   rateLimit: string;
   concurrentFragments: string;
   writeSubs: boolean;
@@ -28,6 +29,7 @@ export const defaultSettings: Settings = {
   format: '',
   extractAudio: false,
   audioFormat: 'mp3',
+  outputTemplate: '',
   rateLimit: '',
   concurrentFragments: '',
   writeSubs: false,
@@ -235,11 +237,9 @@ export const useTabsStore = create<TabsState>()(
       }),
       onRehydrateStorage: () => (state: TabsState | undefined) => {
         if (state) {
-          // Migrate tabs without settings
+          // Migrate tabs without settings or with newly added setting keys
           for (const tab of state.tabs) {
-            if (!tab.settings) {
-              tab.settings = { ...defaultSettings };
-            }
+            tab.settings = { ...defaultSettings, ...tab.settings };
           }
           // Set activeTabId to first tab if not set
           if (!state.activeTabId || !state.tabs.find(t => t.id === state.activeTabId)) {

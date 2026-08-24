@@ -34,6 +34,7 @@ to save it, and monitor the download without working from a terminal.
 | Format selection | Passes a custom yt-dlp format expression with `-f` |
 | Extract audio | Creates an audio-only download with `-x` |
 | Audio format | Supports MP3, AAC, FLAC, WAV, Opus, M4A, and Vorbis |
+| Output template | Sets the filename with `-o`. Relative templates are saved under the tab folder |
 | Rate limit | Limits download speed with `--rate-limit` |
 | Concurrent fragments | Downloads multiple fragments in parallel with `-N` |
 | Subtitles | Downloads selected subtitle languages |
@@ -64,9 +65,9 @@ video/audio merging operations still require
 4. Use the **Settings** view when you need a specific format, audio extraction,
    subtitles, browser cookies, rate limiting, or custom yt-dlp arguments.
 
-Downloads start immediately and use the settings of their current tab. The output
-filename is `%(title)s.%(ext)s`, and an existing file with the same name will not
-be overwritten.
+Downloads start immediately and use the settings of their current tab. The default
+output filename is `%(title)s.%(ext)s` (configurable with `-o` in Settings), and
+an existing file with the same name will not be overwritten.
 
 ## Development
 
