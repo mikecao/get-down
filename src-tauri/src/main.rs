@@ -3,10 +3,11 @@
     windows_subsystem = "windows"
 )]
 
+#[cfg(debug_assertions)]
 use tauri::Manager;
 
 fn main() {
-    tauri::Builder::default()
+    let builder = tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(
@@ -21,19 +22,22 @@ fn main() {
                     }],
                 )
                 .build(),
-        )
-        .setup(|app| {
-            // `pnpm dev` starts Vite first and sets TAURI_DEV_URL to the bound port.
-            // The compiled config still has a default URL, so navigate at runtime.
-            #[cfg(debug_assertions)]
-            if let (Ok(url), Some(window)) =
-                (std::env::var("TAURI_DEV_URL"), app.get_webview_window("main"))
-            {
-                let parsed: tauri::Url = url.parse().expect("invalid TAURI_DEV_URL");
-                window.navigate(parsed)?;
-            }
-            Ok(())
-        })
+        );
+
+    // `pnpm dev` starts Vite first and sets TAURI_DEV_URL to the bound port.
+    // The compiled config still has a default URL, so navigate at runtime.
+    #[cfg(debug_assertions)]
+    let builder = builder.setup(|app| {
+        if let (Ok(url), Some(window)) =
+            (std::env::var("TAURI_DEV_URL"), app.get_webview_window("main"))
+        {
+            let parsed: tauri::Url = url.parse().expect("invalid TAURI_DEV_URL");
+            window.navigate(parsed)?;
+        }
+        Ok(())
+    });
+
+    builder
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
