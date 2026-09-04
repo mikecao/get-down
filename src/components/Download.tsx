@@ -18,8 +18,23 @@ function toOutputLines(lines: string[] = []) {
   return lines.map((text, id) => ({ id, text }));
 }
 
+function extractName(lines: string[] = []) {
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const destination = lines[i].match(/Destination:\s+(.*)/);
+    if (destination) {
+      return destination[1];
+    }
+    const already = lines[i].match(/\[download\]\s+(.+?)\s+has already been downloaded/);
+    if (already) {
+      return already[1];
+    }
+  }
+  return undefined;
+}
+
 export default function Download({
   url,
+  initialName,
   initialStatus,
   initialOutput,
   settings,
@@ -28,20 +43,23 @@ export default function Download({
   onRemove,
 }: {
   url: string;
+  initialName?: string;
   initialStatus?: string;
   initialOutput?: string[];
   settings: Settings;
   savePath: string;
-  onChange: (value: string, output?: string[]) => void;
+  onChange: (value: string, output?: string[], name?: string) => void;
   onRemove: () => void;
 }) {
+  const savedName = initialName || extractName(initialOutput);
   const [state, setState] = useState({
-    name: url,
+    name: savedName || url,
     status: initialStatus || LOADING,
     size: '--',
     speed: '--',
     progress: initialStatus === COMPLETE ? '100' : '0',
   });
+  const nameRef = useRef(savedName || url);
   const [output, setOutput] = useState(() => toOutputLines(initialOutput));
   const [expanded, setExpanded] = useState(false);
   const { name, status, size, speed, progress } = state;
@@ -58,13 +76,20 @@ export default function Download({
   }
 
   function persistStatus(nextStatus: string) {
-    onChange(nextStatus, outputLinesRef.current.slice());
+    onChange(nextStatus, outputLinesRef.current.slice(), nameRef.current);
   }
 
   function stdout(line: string) {
     const name = line.match(/Destination:\s+(.*)/);
     if (name) {
+      nameRef.current = name[1];
       setState(state => ({ ...state, name: name[1] }));
+    }
+
+    const already = line.match(/\[download\]\s+(.+?)\s+has already been downloaded/);
+    if (already) {
+      nameRef.current = already[1];
+      setState(state => ({ ...state, name: already[1] }));
     }
 
     const progress = line.match(/([\d.]+)% of/);

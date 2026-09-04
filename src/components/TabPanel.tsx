@@ -23,8 +23,8 @@ function TabPanel({ tabId }: TabPanelProps) {
     addDownload(tabId, url);
   };
 
-  const handleChange = (downloadId: string, status: string, output?: string[]) => {
-    updateDownloadStatus(tabId, downloadId, status, output);
+  const handleChange = (downloadId: string, status: string, output?: string[], name?: string) => {
+    updateDownloadStatus(tabId, downloadId, status, output, name);
   };
 
   const handleRemove = (downloadId: string) => {

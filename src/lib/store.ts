@@ -7,6 +7,7 @@ import { getSetting, setSetting } from './db';
 export interface Download {
   id: string;
   url: string;
+  name?: string;
   status?: string;
   output?: string[];
 }
@@ -60,6 +61,7 @@ interface TabsState {
     downloadId: string,
     status: string,
     output?: string[],
+    name?: string,
   ) => void;
   removeDownload: (tabId: string, downloadId: string) => void;
   clearCompleted: (tabId: string) => void;
@@ -164,6 +166,7 @@ export const useTabsStore = create<TabsState>()(
         downloadId: string,
         status: string,
         output?: string[],
+        name?: string,
       ) => {
         set(state => ({
           tabs: state.tabs.map(tab =>
@@ -172,7 +175,12 @@ export const useTabsStore = create<TabsState>()(
                   ...tab,
                   downloads: tab.downloads.map(d =>
                     d.id === downloadId
-                      ? { ...d, status, ...(output !== undefined ? { output } : {}) }
+                      ? {
+                          ...d,
+                          status,
+                          ...(output !== undefined ? { output } : {}),
+                          ...(name !== undefined ? { name } : {}),
+                        }
                       : d,
                   ),
                 }
