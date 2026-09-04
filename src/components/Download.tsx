@@ -2,7 +2,7 @@ import type { Child } from '@tauri-apps/plugin-shell';
 import { Command, open as openShell } from '@tauri-apps/plugin-shell';
 import debug from 'debug';
 import { Terminal, X } from 'lucide-react';
-import { type MouseEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { TableCell, TableRow } from '@/components/ui/table';
@@ -169,8 +169,7 @@ export default function Download({
     onRemove();
   };
 
-  const handleOpenLink = async (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
+  const handleOpenLink = async () => {
     try {
       await openShell(url);
     } catch (error) {
@@ -182,16 +181,14 @@ export default function Download({
     <>
       <TableRow>
         <TableCell className="truncate py-2">
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
+          <button
+            type="button"
             onClick={handleOpenLink}
-            className="block truncate hover:text-primary hover:underline"
+            className="block w-full truncate text-left hover:text-primary hover:underline"
             title={name}
           >
             {name}
-          </a>
+          </button>
         </TableCell>
         <TableCell className="py-2">
           <span>{status}</span>
